@@ -120,7 +120,17 @@ Como o vírus sofre mutações, as sequências brutas vêm com tamanhos ligeiram
 
 `python scripts/02_align_seqs.py`
 
-4. Filogenética
+4. Filogenética e Visualização
+
+A reconstrução da árvore filogenética é realizada via **IQ-TREE 3** utilizando o método de Máxima Verossimilhança com suporte de nós por Ultrafast Bootstrap (UFBoot) e enraizamento pelo ponto médio (*midpoint rooting*).
+
+#### 4.1 Abordagens para Gerar/Visualizar a Árvore
+Existem 3 métodos avaliados no pipeline:
+1. **iTOL na web (Método Oficial):** Utilizado para renderização final e figuras de publicação.
+2. **Script em Python (`scripts/04_plot_tree.py`):** Mantido no repositório para validação rápida local da árvore.
+3. **FigTree:** Requer Java Runtime Environment (JRE) para interface gráfica (opcional).
+
+> **Decisão de Design:** Após testar a plotagem local e via iTOL, optou-se exclusivamente pelas imagens geradas pelo **iTOL** para compor os resultados finais e figuras de publicação.
 
 5. Análise de Substituições e Variabilidade
 Calcule a matriz de identidade aos pares para identificar a divergencia nucleotidica entre as amostras ativas.
