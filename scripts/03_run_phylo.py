@@ -4,18 +4,18 @@ import subprocess
 
 
 # caminhos dos arquivos
-entrada = "HTLV/data/processed/htlv_sequence_aligned.fasta"
-saida = "HTLV/results/iqtree/iqtree"
+input = "HTLV/data/processed/htlv_sequence_aligned.fasta"
+output = "HTLV/results/iqtree/iqtree"
 iqtree = r"C:\Users\Larissa\Documents\Codigos\FerramentasBioinfo\iqtree3.exe"
 
 # quero garantir que ao rodar essas pasta vao existir e se não existir o os vai cria-las
 
 os.makedirs("HTLV/results/iqtree", exist_ok=True)
 
-if os.path.exists(entrada):
+if os.path.exists(input):
     print("Arquivo localizado!")
 else:
-    print(f"Erro. O arquivo {entrada} não foi encontrado.")
+    print(f"Erro. O arquivo {input} não foi encontrado.")
     sys.exit(1) 
     # interrompe o script aqui se não encontrar o arquivo de entrada
     # (1) pq é o código de saída que avisa o computador que paramos por causa de um erro
@@ -32,11 +32,11 @@ else:
 # 1. Montar a lista de argumentos para o terminal
 cmd = [
     iqtree, # abre a lista
-    "-s", entrada, # "s" => flag de entrada
+    "-s", input, # "s" => flag de entrada
     "-m", "MFP",   # "-m" => flag do modelo
     "-bb", "1000", # "-bb" => flag do bootstrap
     "-nt", "AUTO", # usa todos os 4 nucleos da CPU
-    "-pre", saida
+    "-pre", output
 ]
 
 # 2. Executa o comando e aguarda a finalização
