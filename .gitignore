@@ -1,0 +1,6 @@
+*.ckp.gz
+*.mldist
+*.model.gz
+*.bionj
+*.parstree
+*.splits.nex
