@@ -1,0 +1,461 @@
+IQ-TREE version 3.1.3 for Windows 64-bit built Jun 19 2026
+Developed by Bui Quang Minh, Thomas Wong, Nhan Ly-Trong, Huaiyan Ren
+Contributed by Lam-Tung Nguyen, Dominik Schrempf, Chris Bielow,
+Olga Chernomor, Michael Woodhams, Diep Thi Hoang, Heiko Schmidt
+
+Host:    DESKTOP-SKQAN1A (AVX2, FMA3, 3 GB RAM)
+Command: C:\Users\Larissa\Documents\Codigos\FerramentasBioinfo\iqtree3.exe -s HTLV/data/processed/htlv_sequence_aligned.fasta -m MFP -bb 1000 -nt AUTO -pre HTLV/results/iqtree
+Seed:    639466 (Using SPRNG - Scalable Parallel Random Number Generator)
+Time:    Wed Sep 02 22:40:36 2026
+Kernel:  AVX+FMA - auto-detect threads (4 CPU cores detected)
+
+Reading alignment file HTLV/data/processed/htlv_sequence_aligned.fasta ... Fasta format detected
+Reading fasta file: done in 0.185839 secs using 50.45% CPU
+Alignment most likely contains DNA/RNA sequences
+Constructing alignment: done in 0.3821 secs using 16.36% CPU
+Alignment has 257 sequences with 9543 columns, 5202 distinct patterns
+7803 parsimony-informative, 349 singleton sites, 1391 constant sites
+                                        Gap/Ambiguity  Composition  p-value
+Analyzing sequences: done in 0.0781266 secs using 120% CPU
+   1  AB273635.1.522.undefined.-.9033           5.34%    passed     97.01%
+   2  AB513134.1.543.undefined.-.9034           5.33%    passed     97.43%
+   3  AB979451.1.570.undefined.-.8941           6.31%    passed     95.90%
+   4  AF033817.1.646.undefined.-.8507          10.86%    passed     84.38%
+   5  AF042071.1.647.undefined.RKI3-Ger.8868    7.07%    passed     92.97%
+   6  AF074965.1.680.undefined.-.8893           6.81%    failed      2.98%
+   7  AF139170.1.724.undefined.-.9031           5.37%    passed     99.66%
+   8  AF139382.1.725.undefined.-.8958           6.13%    failed      0.81%
+   9  AF259264.1.922.undefined.WHP.9034         5.33%    passed     94.07%
+  10  AF326583.1.943.undefined.-.8964           6.07%    failed      1.12%
+  11  AF326584.1.944.undefined.-.8955           6.16%    failed      1.07%
+  12  AF412314.1.982.undefined.-.8962           6.09%    failed      1.52%
+  13  AY563953.1.1298.undefined.-.8383         12.17%    passed     96.66%
+  14  AY563954.1.1299.undefined.BRRP438.8883    6.93%    passed     93.84%
+  15  D13784.1.1482.undefined.HS-35.8400       11.98%    passed     67.75%
+  16  DQ093792.1.1639.undefined.-.8917          6.56%    failed      0.25%
+  17  DQ462191.1.2003.undefined.-.8553         10.37%    failed      0.13%
+  18  EU649782.1.2294.undefined.-.8922          6.51%    failed      0.38%
+  19  GQ463602.1.2536.undefined.-.8913          6.60%    failed      0.03%
+  20  GU212854.1.2607.undefined.-.8953          6.18%    failed      1.76%
+  21  HQ606137.1.2766.undefined.1066/05.9039    5.28%    passed     97.31%
+  22  HQ606138.1.2767.undefined.1067/05.9039    5.28%    passed     98.48%
+  23  J02029.1.2774.undefined.ATK-1.9068        4.98%    passed     91.92%
+  24  JX507077.3171.undefined.SF26.9023         5.45%    passed     99.38%
+  25  JX507077.1.3172.undefined.-.9023          5.45%    passed     99.38%
+  26  JX891478.1.3195.undefined.-.9046          5.21%    passed     98.61%
+  27  JX891479.1.3196.undefined.-.9048          5.19%    passed     95.15%
+  28  KC807984.1.3343.undefined.-.9034          5.33%    passed     96.67%
+  29  KF242505.1.3551.undefined.-.9046          5.21%    passed     95.97%
+  30  KF242506.1.3552.undefined.-.9046          5.21%    passed     98.51%
+  31  KF797815.1.3556.undefined.-.8341         12.60%    passed     93.23%
+  32  KF797816.1.3557.undefined.-.8279         13.25%    passed     93.02%
+  33  KF797817.1.3558.undefined.-.8264         13.40%    passed     92.00%
+  34  KF797818.1.3559.undefined.-.8269         13.35%    passed     93.28%
+  35  KF797819.1.3560.undefined.-.8280         13.23%    passed     79.07%
+  36  KF797820.1.3561.undefined.-.8283         13.20%    passed     91.86%
+  37  KF797821.1.3562.undefined.-.8296         13.07%    passed     89.12%
+  38  KF797822.1.3563.undefined.-.8279         13.25%    passed     92.97%
+  39  KF797823.1.3564.undefined.-.8279         13.25%    passed     90.36%
+  40  KF797824.1.3565.undefined.-.8271         13.33%    passed     90.67%
+  41  KF797825.1.3566.undefined.-.8298         13.05%    passed     92.74%
+  42  KF797826.1.3567.undefined.-.8280         13.23%    passed     83.80%
+  43  KF797827.1.3568.undefined.-.8285         13.18%    passed     93.34%
+  44  KF797828.1.3569.undefined.-.8263         13.41%    passed     86.41%
+  45  KF797829.1.3570.undefined.-.8280         13.25%    passed     92.21%
+  46  KF797830.1.3571.undefined.-.8280         13.23%    passed     92.50%
+  47  KF797831.1.3572.undefined.-.8279         13.25%    passed     93.44%
+  48  KF797832.1.3573.undefined.-.8297         13.06%    passed     93.99%
+  49  KF797833.1.3574.undefined.-.8279         13.25%    passed     92.07%
+  50  KF797834.1.3575.undefined.-.8297         13.06%    passed     93.65%
+  51  KF797835.1.3576.undefined.-.8279         13.25%    passed     93.02%
+  52  KF797837.1.3578.undefined.-.8280         13.25%    passed     85.99%
+  53  KF797839.1.3580.undefined.-.8279         13.25%    passed     91.20%
+  54  KF797840.1.3581.undefined.-.8279         13.25%    passed     92.68%
+  55  KF797841.1.3582.undefined.-.8279         13.25%    passed     92.99%
+  56  KF797842.1.3583.undefined.-.8279         13.25%    passed     89.46%
+  57  KF797843.1.3584.undefined.-.8279         13.25%    passed     81.32%
+  58  KF797844.1.3585.undefined.-.8297         13.06%    passed     80.68%
+  59  KF797845.1.3586.undefined.-.8279         13.25%    passed     92.98%
+  60  KF797846.1.3587.undefined.-.8396         12.02%    passed     94.25%
+  61  KF797847.1.3588.undefined.-.8279         13.25%    passed     93.02%
+  62  KF797848.1.3589.undefined.-.8280         13.23%    passed     92.73%
+  63  KF797849.1.3590.undefined.-.8276         13.28%    passed     93.25%
+  64  KF797850.1.3591.undefined.-.8277         13.27%    passed     95.71%
+  65  KF797852.1.3593.undefined.-.8283         13.20%    passed     80.36%
+  66  KF797853.1.3594.undefined.-.8280         13.23%    passed     83.20%
+  67  KF797855.1.3596.undefined.-.8280         13.23%    passed     93.14%
+  68  KF797857.1.3598.undefined.-.8268         13.36%    passed     92.11%
+  69  KF797859.1.3600.undefined.-.8299         13.04%    passed     84.51%
+  70  KF797860.1.3601.undefined.-.8279         13.25%    passed     94.08%
+  71  KF797861.1.3602.undefined.-.8271         13.33%    passed     93.39%
+  72  KF797862.1.3603.undefined.-.8280         13.23%    passed     94.67%
+  73  KF797863.1.3604.undefined.-.8279         13.25%    passed     92.24%
+  74  KF797864.1.3605.undefined.-.8297         13.06%    passed     94.31%
+  75  KF797865.1.3606.undefined.-.8283         13.20%    passed     91.86%
+  76  KF797866.1.3607.undefined.-.8050         15.64%    passed     82.39%
+  77  KF797867.1.3608.undefined.-.8285         13.18%    passed     93.04%
+  78  KF797868.1.3609.undefined.-.8276         13.28%    passed     94.02%
+  79  KF797869.1.3610.undefined.-.8279         13.25%    passed     91.65%
+  80  KF797870.1.3611.undefined.-.8279         13.25%    passed     91.65%
+  81  KF797871.1.3612.undefined.-.8279         13.25%    passed     93.47%
+  82  KF797872.1.3613.undefined.-.8279         13.25%    passed     92.26%
+  83  KF797873.1.3614.undefined.-.8279         13.25%    passed     91.31%
+  84  KF797875.1.3616.undefined.-.8279         13.25%    passed     92.81%
+  85  KF797876.1.3617.undefined.-.8280         13.23%    passed     80.61%
+  86  KF797877.1.3618.undefined.-.8279         13.25%    passed     92.26%
+  87  KF797878.1.3619.undefined.-.8274         13.30%    passed     93.38%
+  88  KF797879.1.3620.undefined.-.8296         13.07%    passed     87.10%
+  89  KF797880.1.3621.undefined.-.8279         13.26%    passed     86.65%
+  90  KF797881.1.3622.undefined.-.8280         13.23%    passed     90.84%
+  91  KF797882.1.3623.undefined.-.8280         13.23%    passed     78.13%
+  92  KF797884.1.3625.undefined.-.8300         13.03%    passed     91.76%
+  93  KF797885.1.3626.undefined.-.8279         13.25%    passed     90.69%
+  94  KF797886.1.3627.undefined.-.8396         12.02%    passed     96.46%
+  95  KF797887.1.3628.undefined.-.8275         13.29%    passed     88.81%
+  96  KF797888.1.3629.undefined.-.8279         13.25%    passed     91.90%
+  97  KF797889.1.3630.undefined.-.8279         13.25%    passed     90.25%
+  98  KU214243.1.4043.undefined.-.9040          5.27%    passed     99.85%
+  99  KX430030.1.4110.undefined.-.9037          5.30%    passed     99.60%
+ 100  KX430031.1.4111.undefined.-.9036          5.31%    passed     99.62%
+ 101  KX905202.1.4112.undefined.-.9033          5.34%    passed     97.13%
+ 102  KX905203.1.4113.undefined.-.9033          5.34%    passed     99.14%
+ 103  L02534.1.4254.undefined.mel5.9039         5.28%    passed     98.10%
+ 104  L03561.2.4255.undefined.-.9043            5.24%    passed     99.22%
+ 105  L03562.2.4256.undefined.-.9033            5.34%    passed     98.69%
+ 106  L11456.1.4272.undefined.-.8956            6.15%    failed      0.49%
+ 107  L20734.1.4282.undefined.-.8957            6.14%    failed      1.06%
+ 108  L36905.1.4318.undefined.Boi.9035          5.32%    passed     99.68%
+ 109  LC185235.1.4476.undefined.-.9037          5.30%    passed     99.26%
+ 110  LC185236.1.4477.undefined.-.9035          5.33%    passed     99.95%
+ 111  LC185237.1.4478.undefined.-.9034          5.33%    passed     97.70%
+ 112  LC185238.1.4479.undefined.-.9037          5.30%    passed     99.69%
+ 113  LC185239.1.4480.undefined.-.9035          5.32%    passed     99.11%
+ 114  LC185240.1.4481.undefined.-.9037          5.30%    passed     98.62%
+ 115  LC185241.1.4482.undefined.-.9035          5.32%    passed     95.90%
+ 116  LC185242.1.4483.undefined.-.9041          5.26%    passed     99.34%
+ 117  LC192254.1.4484.undefined.-.9037          5.30%    passed     99.07%
+ 118  LC192255.1.4485.undefined.-.9037          5.30%    passed     99.76%
+ 119  LC192256.1.4486.undefined.-.9035          5.32%    passed     99.74%
+ 120  LC192257.1.4487.undefined.-.9037          5.30%    passed     97.97%
+ 121  LC192258.1.4488.undefined.-.9035          5.32%    passed     98.58%
+ 122  LC192259.1.4489.undefined.-.9039          5.28%    passed     98.56%
+ 123  LC192260.1.4490.undefined.-.9041          5.26%    passed     99.08%
+ 124  LC192261.1.4491.undefined.-.9039          5.28%    passed     99.45%
+ 125  LC192262.1.4492.undefined.-.9035          5.32%    passed     98.70%
+ 126  LC192263.1.4493.undefined.-.9037          5.30%    passed     96.90%
+ 127  LC192264.1.4494.undefined.-.9043          5.24%    passed     99.18%
+ 128  LC192500.1.4495.undefined.-.9030          5.38%    passed     97.29%
+ 129  LC192501.1.4496.undefined.-.9036          5.31%    passed     98.04%
+ 130  LC192502.1.4497.undefined.-.9032          5.35%    passed     98.12%
+ 131  LC192503.1.4498.undefined.-.9032          5.35%    passed     95.19%
+ 132  LC192504.1.4499.undefined.-.9032          5.35%    passed     98.12%
+ 133  LC192505.1.4500.undefined.-.9032          5.35%    passed     93.88%
+ 134  LC192506.1.4501.undefined.-.9032          5.35%    passed     94.87%
+ 135  LC192507.1.4502.undefined.-.8993          5.76%    passed     94.40%
+ 136  LC192508.1.4503.undefined.-.8944          6.28%    passed     94.14%
+ 137  LC192509.1.4504.undefined.-.9009          5.60%    passed     95.88%
+ 138  LC192510.1.4505.undefined.-.9031          5.37%    passed     96.75%
+ 139  LC192511.1.4506.undefined.-.8999          5.70%    passed     95.93%
+ 140  LC192512.1.4507.undefined.-.8952          6.19%    passed     92.65%
+ 141  LC192513.1.4508.undefined.-.9033          5.34%    passed     98.59%
+ 142  LC192514.1.4509.undefined.-.9032          5.35%    passed     96.43%
+ 143  LC192515.1.4510.undefined.-.9019          5.49%    passed     97.31%
+ 144  LC192516.1.4511.undefined.-.9031          5.37%    passed     96.99%
+ 145  LC192517.1.4512.undefined.-.9033          5.34%    passed     97.36%
+ 146  LC192518.1.4513.undefined.-.9029          5.39%    passed     96.64%
+ 147  LC192519.1.4514.undefined.-.9028          5.40%    passed     96.31%
+ 148  LC192520.1.4515.undefined.-.9032          5.35%    passed     95.18%
+ 149  LC192521.1.4516.undefined.-.9031          5.37%    passed     96.86%
+ 150  LC192522.1.4517.undefined.-.9032          5.35%    passed     96.59%
+ 151  LC192523.1.4518.undefined.-.9032          5.35%    passed     94.04%
+ 152  LC192524.1.4519.undefined.-.9032          5.35%    passed     97.36%
+ 153  LC192525.1.4520.undefined.-.8986          5.84%    passed     97.44%
+ 154  LC192526.1.4521.undefined.-.8958          6.13%    passed     98.05%
+ 155  LC192527.1.4522.undefined.-.9031          5.37%    passed     97.40%
+ 156  LC192528.1.4523.undefined.-.8957          6.14%    passed     96.71%
+ 157  LC192529.1.4524.undefined.-.8964          6.07%    passed     94.15%
+ 158  LC192530.1.4525.undefined.-.9031          5.37%    passed     94.25%
+ 159  LC192531.1.4526.undefined.-.9032          5.35%    passed     94.64%
+ 160  LC192532.1.4527.undefined.-.9032          5.35%    passed     96.83%
+ 161  LC192533.1.4528.undefined.-.9033          5.34%    passed     95.83%
+ 162  LC192534.1.4529.undefined.-.9010          5.59%    passed     96.80%
+ 163  LC192535.1.4530.undefined.-.9026          5.42%    passed     93.69%
+ 164  LC192536.1.4531.undefined.-.9021          5.47%    passed     95.15%
+ 165  LC209958.1.4532.undefined.-.9037          5.30%    passed     99.76%
+ 166  LC209959.1.4533.undefined.-.9037          5.30%    passed     99.14%
+ 167  LC209960.1.4534.undefined.-.9037          5.30%    passed     99.55%
+ 168  LC209961.1.4535.undefined.-.9037          5.30%    passed     98.03%
+ 169  LC209962.1.4536.undefined.-.9037          5.30%    passed     98.29%
+ 170  LC209963.1.4537.undefined.-.9037          5.30%    passed     99.02%
+ 171  LC209964.1.4538.undefined.-.9037          5.30%    passed     98.25%
+ 172  LC209965.1.4539.undefined.-.9037          5.30%    passed     99.98%
+ 173  LC209966.1.4540.undefined.-.9037          5.30%    passed     99.64%
+ 174  LC209967.1.4541.undefined.-.9037          5.30%    passed     98.86%
+ 175  LC209968.1.4542.undefined.-.9037          5.30%    passed     97.92%
+ 176  LC209969.1.4543.undefined.-.9037          5.30%    passed     94.51%
+ 177  LC209970.1.4544.undefined.-.9037          5.30%    passed     96.54%
+ 178  LC209971.1.4545.undefined.-.9037          5.30%    passed     97.93%
+ 179  LC209972.1.4546.undefined.-.9037          5.30%    passed     99.12%
+ 180  LC209973.1.4547.undefined.-.9037          5.30%    passed     99.13%
+ 181  LC209974.1.4548.undefined.-.9037          5.30%    passed     98.64%
+ 182  LC209975.1.4549.undefined.-.9037          5.30%    passed     98.86%
+ 183  LC209976.1.4550.undefined.-.9037          5.30%    passed     95.94%
+ 184  LC209977.1.4551.undefined.-.9037          5.30%    passed     99.30%
+ 185  LC209978.1.4552.undefined.-.9037          5.30%    passed     99.12%
+ 186  LC209979.1.4553.undefined.-.9037          5.30%    passed     98.65%
+ 187  LC209980.1.4554.undefined.-.9037          5.30%    passed     99.38%
+ 188  LC209981.1.4555.undefined.-.9037          5.30%    passed     97.73%
+ 189  LC209982.1.4556.undefined.-.9037          5.30%    passed     98.35%
+ 190  LC209983.1.4557.undefined.-.9037          5.30%    passed     99.55%
+ 191  LC209984.1.4558.undefined.-.9037          5.30%    passed     97.61%
+ 192  LC209985.1.4559.undefined.-.9037          5.30%    passed     99.26%
+ 193  LC209986.1.4560.undefined.-.9037          5.30%    passed     99.19%
+ 194  LC209987.1.4561.undefined.-.9037          5.30%    passed     99.22%
+ 195  LC209988.1.4562.undefined.-.9037          5.30%    passed     99.11%
+ 196  LC209989.1.4563.undefined.-.9037          5.30%    passed     97.82%
+ 197  LC209990.1.4564.undefined.-.9037          5.30%    passed     98.86%
+ 198  LC209991.1.4565.undefined.-.9037          5.30%    passed     98.14%
+ 199  LC209992.1.4566.undefined.-.9037          5.30%    passed     98.98%
+ 200  LC209993.1.4567.undefined.-.9037          5.30%    passed     98.12%
+ 201  LC209994.1.4568.undefined.-.9037          5.30%    passed     98.62%
+ 202  LC209995.1.4569.undefined.-.9037          5.30%    passed     98.34%
+ 203  LC209996.1.4570.undefined.-.9037          5.30%    passed     95.01%
+ 204  LC209997.1.4571.undefined.-.9037          5.30%    passed     97.69%
+ 205  LC209998.1.4572.undefined.-.9037          5.30%    passed     99.02%
+ 206  LC209999.1.4573.undefined.-.9037          5.30%    passed     98.82%
+ 207  LC210000.1.4574.undefined.-.9037          5.30%    passed     99.22%
+ 208  LC210001.1.4575.undefined.-.9037          5.30%    passed     99.26%
+ 209  LC210002.1.4576.undefined.-.9037          5.30%    passed     99.69%
+ 210  LC210003.1.4577.undefined.-.9037          5.30%    passed     98.67%
+ 211  LC210004.1.4578.undefined.-.9037          5.30%    passed     97.91%
+ 212  LC210005.1.4579.undefined.-.9037          5.30%    passed     98.45%
+ 213  LC210006.1.4580.undefined.-.9037          5.30%    passed     98.07%
+ 214  LC210007.1.4581.undefined.-.9037          5.30%    passed     99.61%
+ 215  LC210008.1.4582.undefined.-.9037          5.30%    passed     99.80%
+ 216  LC210009.1.4583.undefined.-.9037          5.30%    passed     97.72%
+ 217  LC210010.1.4584.undefined.-.9037          5.30%    passed     96.89%
+ 218  LC210011.1.4585.undefined.-.9037          5.30%    passed     96.60%
+ 219  LC210012.1.4586.undefined.-.9037          5.30%    passed     99.02%
+ 220  LC210013.1.4587.undefined.-.9037          5.30%    passed     98.32%
+ 221  LC210014.1.4588.undefined.-.9037          5.30%    passed     99.64%
+ 222  LC210015.1.4589.undefined.-.9037          5.30%    passed     98.12%
+ 223  LC210016.1.4590.undefined.-.9037          5.30%    passed     98.65%
+ 224  LC210017.1.4591.undefined.-.9037          5.30%    passed     98.45%
+ 225  LC210018.1.4592.undefined.-.9037          5.30%    passed     97.93%
+ 226  LC210019.1.4593.undefined.-.9037          5.30%    passed     99.10%
+ 227  LC210020.1.4594.undefined.-.9037          5.30%    passed     99.12%
+ 228  LC210021.1.4595.undefined.-.9037          5.30%    passed     97.52%
+ 229  LC210022.1.4596.undefined.-.9037          5.30%    passed     98.85%
+ 230  LC210023.1.4597.undefined.-.9037          5.30%    passed     99.22%
+ 231  LC210024.1.4598.undefined.-.9037          5.30%    passed     97.18%
+ 232  LC210025.1.4599.undefined.-.9037          5.30%    passed     99.32%
+ 233  LC210026.1.4600.undefined.-.9037          5.30%    passed     99.01%
+ 234  LC210027.1.4601.undefined.-.9037          5.30%    passed     97.89%
+ 235  LC210028.1.4602.undefined.-.9037          5.30%    passed     98.85%
+ 236  LC210029.1.4603.undefined.-.9037          5.30%    passed     98.47%
+ 237  LC210030.1.4604.undefined.-.9037          5.30%    passed     99.55%
+ 238  LC210031.1.4605.undefined.-.9037          5.30%    passed     96.00%
+ 239  LC210032.1.4606.undefined.-.9037          5.30%    passed     98.12%
+ 240  LC210033.1.4607.undefined.-.9037          5.30%    passed     98.28%
+ 241  LC210034.1.4608.undefined.-.9037          5.30%    passed     98.98%
+ 242  LC210035.1.4609.undefined.-.9037          5.30%    passed     98.62%
+ 243  LC210036.1.4610.undefined.-.9037          5.30%    passed     97.89%
+ 244  LC210037.1.4611.undefined.-.9037          5.30%    passed     99.55%
+ 245  LC210038.1.4612.undefined.-.9037          5.30%    passed     95.25%
+ 246  LC210039.1.4613.undefined.-.9037          5.30%    passed     98.04%
+ 247  LC210040.1.4614.undefined.-.9037          5.30%    passed     95.13%
+ 248  LC210041.1.4615.undefined.-.9037          5.30%    passed     96.27%
+ 249  LC210042.1.4616.undefined.-.9037          5.30%    passed     99.13%
+ 250  M10060.1.4619.undefined.-.8952            6.19%    failed      1.45%
+ 251  M86840.1.4672.undefined.-.8417           11.80%    passed     91.95%
+ 252  NC_001436.1.4792.undefined.-.8507        10.86%    passed     84.38%
+ 253  NC_001488.1.4793.undefined.-.8952         6.19%    failed      1.45%
+ 254  U19949.1.4889.undefined.ATL-YS.9036       5.31%    passed     97.96%
+ 255  X89270.1.5231.undefined.-.8955            6.16%    failed      0.60%
+ 256  Y13051.1.5243.undefined.-.8960            6.11%    failed      1.16%
+ 257  Y14365.1.5244.undefined.-.8971            5.99%    failed      0.27%
+****  TOTAL                                     7.61%  17 sequences failed composition chi2 test (p-value<5%; df=3)
+NOTE: KF797865.1.3606.undefined.-.8283 is identical to KF797820.1.3561.undefined.-.8283 but kept for subsequent analysis
+NOTE: KF797870.1.3611.undefined.-.8279 is identical to KF797869.1.3610.undefined.-.8279 but kept for subsequent analysis
+NOTE: LC209998.1.4572.undefined.-.9037 is identical to LC209963.1.4537.undefined.-.9037 but kept for subsequent analysis
+NOTE: LC210032.1.4606.undefined.-.9037 is identical to LC210015.1.4589.undefined.-.9037 but kept for subsequent analysis
+NOTE: NC_001488.1.4793.undefined.-.8952 is identical to M10060.1.4619.undefined.-.8952 but kept for subsequent analysis
+Checking for duplicate sequences: done in 1.51871 secs
+
+NOTE: Restoring information from model checkpoint file HTLV/results/iqtree.model.gz
+
+CHECKPOINT: Initial tree restored
+Measuring multi-threading efficiency up to 4 CPU cores
+2 trees examined
+Threads: 1 / Time: 4.407 sec / Speedup: 1.000 / Efficiency: 100% / LogL: -385606
+Threads: 2 / Time: 2.235 sec / Speedup: 1.972 / Efficiency: 99% / LogL: -385606
+Threads: 3 / Time: 2.100 sec / Speedup: 2.099 / Efficiency: 70% / LogL: -385606
+Threads: 4 / Time: 1.886 sec / Speedup: 2.336 / Efficiency: 58% / LogL: -385606
+Determining AUTO threadcount: done in 11.1363 secs using 124.5% CPU
+BEST NUMBER OF THREADS: 4
+
+Perform fast likelihood tree search using GTR+I+G model...
+CHECKPOINT: Tree restored, LogL: -92653.030
+NOTE: ModelFinder requires 453 MB RAM!
+ModelFinder will test up to 968 DNA models (sample size: 9543 epsilon: 0.100) ...
+ No. Model         -LnL         df  AIC          AICc         BIC
+Akaike Information Criterion:           TIM2+F+R4
+Corrected Akaike Information Criterion: TIM2+F+R4
+Bayesian Information Criterion:         TIM2+F+R4
+Best-fit model: TIM2+F+R4 chosen according to BIC
+
+All model information printed to HTLV/results/iqtree.model.gz
+CPU time for ModelFinder: 2967.328 seconds (0h:49m:27s)
+Wall-clock time for ModelFinder: 931.701 seconds (0h:15m:31s)
+Generating 1000 samples for ultrafast bootstrap (seed: 639466)...
+
+NOTE: 193 MB RAM (0 GB) is required!
+Estimate model parameters (epsilon = 0.100)
+1. Initial log-likelihood: -92346.628
+2. Current log-likelihood: -92346.205
+Optimal log-likelihood: -92346.103
+Rate parameters:  A-C: 1.27666  A-G: 9.86335  A-T: 1.27666  C-G: 1.00000  C-T: 5.73824  G-T: 1.00000
+Base frequencies:  A: 0.232  C: 0.350  G: 0.187  T: 0.230
+Site proportion and rates:  (0.511,0.190) (0.155,1.580) (0.252,1.580) (0.081,3.179)
+Parameters optimization took 2 rounds (7.364 sec)
+Wrote distance file to... 
+Computing ML distances based on estimated model parameters...
+Calculating distance matrix: done in 0.428158 secs using 354% CPU
+Computing ML distances took 0.490587 sec (of wall-clock time) 1.562500 sec (of CPU time)
+WARNING: Some pairwise ML distances are too long (saturated)
+Setting up auxiliary I and S matrices: done in 0.0027304 secs
+Constructing RapidNJ tree: done in 0.0088849 secs using 351.7% CPU
+Computing RapidNJ tree took 0.064434 sec (of wall-clock time) 0.062500 sec (of CPU time)
+Log-likelihood of RapidNJ tree: -92730.604
+--------------------------------------------------------------------
+|             INITIALIZING CANDIDATE TREE SET                      |
+--------------------------------------------------------------------
+Generating 98 parsimony trees... 21.775 second
+Computing log-likelihood of 98 initial trees ... 43.915 seconds
+Current best score: -92346.103
+
+Do NNI search on 20 best initial trees
+Estimate model parameters (epsilon = 0.100)
+BETTER TREE FOUND at iteration 1: -92345.153
+Iteration 10 / LogL: -92429.006 / Time: 0h:19m:38s
+Iteration 20 / LogL: -92450.218 / Time: 0h:35m:57s
+Finish initializing candidate tree set (20)
+Current best tree score: -92345.153 / CPU time: 1191.083
+Number of iterations: 20
+--------------------------------------------------------------------
+|               OPTIMIZING CANDIDATE TREE SET                      |
+--------------------------------------------------------------------
+Estimate model parameters (epsilon = 0.100)
+BETTER TREE FOUND at iteration 22: -92336.797
+Estimate model parameters (epsilon = 0.100)
+BETTER TREE FOUND at iteration 25: -92312.211
+Estimate model parameters (epsilon = 0.100)
+BETTER TREE FOUND at iteration 30: -92304.057
+Iteration 30 / LogL: -92304.057 / Time: 0h:39m:18s (1h:21m:58s left)
+Estimate model parameters (epsilon = 0.100)
+BETTER TREE FOUND at iteration 35: -92286.658
+Estimate model parameters (epsilon = 0.100)
+BETTER TREE FOUND at iteration 39: -92279.008
+Iteration 40 / LogL: -92307.413 / Time: 0h:42m:35s (1h:8m:42s left)
+WARNING: NNI search needs unusual large number of steps (257) to converge!
+Estimate model parameters (epsilon = 0.100)
+BETTER TREE FOUND at iteration 46: -92277.560
+Iteration 50 / LogL: -92423.956 / Time: 0h:45m:39s (0h:59m:1s left)
+Log-likelihood cutoff on original alignment: -92369.093
+Estimate model parameters (epsilon = 0.100)
+BETTER TREE FOUND at iteration 53: -92272.889
+Iteration 60 / LogL: -92282.692 / Time: 0h:48m:54s (0h:52m:37s left)
+Iteration 70 / LogL: -92417.725 / Time: 0h:50m:30s (0h:42m:4s left)
+Estimate model parameters (epsilon = 0.100)
+BETTER TREE FOUND at iteration 78: -92272.754
+Iteration 80 / LogL: -92416.951 / Time: 0h:52m:31s (0h:45m:53s left)
+Estimate model parameters (epsilon = 0.100)
+BETTER TREE FOUND at iteration 87: -92271.987
+Iteration 90 / LogL: -92295.715 / Time: 0h:59m:11s (0h:47m:34s left)
+Iteration 100 / LogL: -92277.053 / Time: 1h:2m:39s (0h:41m:25s left)
+Log-likelihood cutoff on original alignment: -92369.093
+NOTE: Bootstrap correlation coefficient of split occurrence frequencies: 0.956
+NOTE: UFBoot does not converge, continue at least 100 more iterations
+Estimate model parameters (epsilon = 0.100)
+BETTER TREE FOUND at iteration 103: -92269.351
+Iteration 110 / LogL: -92448.077 / Time: 1h:5m:1s (0h:42m:13s left)
+Iteration 120 / LogL: -92275.072 / Time: 1h:7m:9s (0h:36m:0s left)
+Iteration 130 / LogL: -92772.328 / Time: 1h:9m:19s (0h:30m:26s left)
+Iteration 140 / LogL: -92664.718 / Time: 1h:11m:28s (0h:25m:21s left)
+Iteration 150 / LogL: -92415.268 / Time: 1h:13m:39s (0h:20m:40s left)
+Log-likelihood cutoff on original alignment: -92369.093
+Iteration 160 / LogL: -92272.051 / Time: 1h:15m:59s (0h:16m:21s left)
+Iteration 170 / LogL: -92269.382 / Time: 1h:18m:6s (0h:12m:13s left)
+Estimate model parameters (epsilon = 0.100)
+BETTER TREE FOUND at iteration 172: -92269.165
+Iteration 180 / LogL: -92273.203 / Time: 1h:23m:0s (0h:34m:41s left)
+Iteration 190 / LogL: -92415.899 / Time: 1h:30m:24s (0h:32m:29s left)
+Iteration 200 / LogL: -92420.289 / Time: 1h:35m:40s (0h:28m:59s left)
+Log-likelihood cutoff on original alignment: -92369.093
+NOTE: Bootstrap correlation coefficient of split occurrence frequencies: 0.983
+NOTE: UFBoot does not converge, continue at least 100 more iterations
+Iteration 210 / LogL: -92270.632 / Time: 1h:39m:31s (0h:36m:10s left)
+Iteration 220 / LogL: -98109.454 / Time: 1h:43m:36s (0h:32m:10s left)
+Iteration 230 / LogL: -92277.872 / Time: 1h:47m:39s (0h:28m:9s left)
+Iteration 240 / LogL: -92274.139 / Time: 1h:52m:3s (0h:24m:13s left)
+Iteration 250 / LogL: -92299.934 / Time: 1h:56m:7s (0h:20m:11s left)
+Log-likelihood cutoff on original alignment: -92369.093
+Iteration 260 / LogL: -92274.839 / Time: 2h:0m:50s (0h:16m:15s left)
+BETTER TREE FOUND at iteration 268: -92269.156
+Iteration 270 / LogL: -92430.160 / Time: 2h:4m:28s (0h:39m:41s left)
+NOTE: 3.352 seconds to dump checkpoint file, increase to 68.000
+Iteration 280 / LogL: -92311.716 / Time: 2h:7m:15s (0h:35m:14s left)
+Iteration 290 / LogL: -92271.385 / Time: 2h:12m:35s (0h:31m:35s left)
+Iteration 300 / LogL: -92284.654 / Time: 2h:16m:54s (0h:27m:36s left)
+Log-likelihood cutoff on original alignment: -92369.093
+NOTE: Bootstrap correlation coefficient of split occurrence frequencies: 0.994
+Iteration 310 / LogL: -92274.379 / Time: 2h:22m:47s (0h:37m:4s left)
+Iteration 320 / LogL: -92445.965 / Time: 2h:24m:53s (0h:32m:26s left)
+Iteration 330 / LogL: -103826.757 / Time: 2h:26m:39s (0h:27m:53s left)
+Iteration 340 / LogL: -92269.933 / Time: 2h:28m:14s (0h:23m:29s left)
+Iteration 350 / LogL: -92276.252 / Time: 2h:29m:57s (0h:19m:15s left)
+Log-likelihood cutoff on original alignment: -92369.093
+Iteration 360 / LogL: -92270.369 / Time: 2h:31m:46s (0h:15m:10s left)
+TREE SEARCH COMPLETED AFTER 369 ITERATIONS / Time: 2h:33m:29s
+
+--------------------------------------------------------------------
+|                    FINALIZING TREE SEARCH                        |
+--------------------------------------------------------------------
+Performs final model parameters optimization
+Estimate model parameters (epsilon = 0.010)
+1. Initial log-likelihood: -92269.156
+2. Current log-likelihood: -92269.128
+Optimal log-likelihood: -92269.120
+Rate parameters:  A-C: 1.27765  A-G: 9.86205  A-T: 1.27765  C-G: 1.00000  C-T: 5.74522  G-T: 1.00000
+Base frequencies:  A: 0.232  C: 0.350  G: 0.187  T: 0.230
+Site proportion and rates:  (0.506,0.186) (0.155,1.557) (0.251,1.557) (0.088,3.115)
+Parameters optimization took 2 rounds (2.856 sec)
+BEST SCORE FOUND : -92269.120
+Creating bootstrap support values...
+Split supports printed to NEXUS file HTLV/results/iqtree.splits.nex
+Total tree length: 20.338
+
+Total number of iterations: 369
+CPU time used for tree search: 16055.031 sec (4h:27m:35s)
+Wall-clock time used for tree search: 8241.687 sec (2h:17m:21s)
+Total CPU time used: 19149.516 sec (5h:19m:9s)
+Total wall-clock time used: 9214.714 sec (2h:33m:34s)
+
+Computing bootstrap consensus tree...
+Reading input file HTLV/results/iqtree.splits.nex...
+257 taxa and 2355 splits.
+Consensus tree written to HTLV/results/iqtree.contree
+Reading input trees file HTLV/results/iqtree.contree
+Log-likelihood of consensus tree: -92413.732
+
+Analysis results written to: 
+  IQ-TREE report:                HTLV/results/iqtree.iqtree
+  Maximum-likelihood tree:       HTLV/results/iqtree.treefile
+  Likelihood distances:          HTLV/results/iqtree.mldist
+
+Ultrafast bootstrap approximation results written to:
+  Split support values:          HTLV/results/iqtree.splits.nex
+  Consensus tree:                HTLV/results/iqtree.contree
+  Screen log file:               HTLV/results/iqtree.log
+
+Date and Time: Thu Sep 03 01:15:08 2026

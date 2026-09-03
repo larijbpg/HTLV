@@ -5,7 +5,7 @@ import subprocess
 
 # caminhos dos arquivos
 entrada = "HTLV/data/processed/htlv_sequence_aligned.fasta"
-saida = "HTLV/results/iqtree"
+saida = "HTLV/results/iqtree/iqtree"
 iqtree = r"C:\Users\Larissa\Documents\Codigos\FerramentasBioinfo\iqtree3.exe"
 
 # quero garantir que ao rodar essas pasta vao existir e se não existir o os vai cria-las
@@ -35,6 +35,7 @@ cmd = [
     "-s", entrada, # "s" => flag de entrada
     "-m", "MFP",   # "-m" => flag do modelo
     "-bb", "1000", # "-bb" => flag do bootstrap
+    "-nt", "AUTO", # usa todos os 4 nucleos da CPU
     "-pre", saida
 ]
 

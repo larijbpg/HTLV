@@ -14,8 +14,9 @@ O objetivo é automatizar o dowload, pré-processamento, alinhamento e análise 
     1. Obtenção de Dados
     2. Pré-processamento e Validação
     3. Alinhamento de Sequências
-    4. Análise de Substituições e Variabilidade
-    5. Agrupamento por Região Geográfica e Subtipo
+    4. Filogenética 
+    5. Análise de Substituições e Variabilidade
+    6. Agrupamento por Região Geográfica e Subtipo
 * Estrutura dos Dados de Entrada
 * Resultados Esperados
 
@@ -26,8 +27,9 @@ O pipeline processa arquivos genômicos no formato FASTA acompanhados de metadad
 
 1. Calcular a estatística descritivas das sequencias (tamanho, conteúdo GC)
 2. Realizar alinhamento multiplo de sequências (MSA)
-3. Identificar posições polimórficas (mutações/SNPs) e calcular matrizes de identidade percentual.
-4. Cruzar variações genéticas com a distribuição geográfica e subtipos de HTLV (HTLV-1, HTLV-2, etc.)
+3. Filogenética
+4. Identificar posições polimórficas (mutações/SNPs) e calcular matrizes de identidade percentual.
+5. Cruzar variações genéticas com a distribuição geográfica e subtipos de HTLV (HTLV-1, HTLV-2, etc.)
 
 # 📁 Estrutura do Projeto
 
@@ -118,9 +120,11 @@ Como o vírus sofre mutações, as sequências brutas vêm com tamanhos ligeiram
 
 `python scripts/02_align_seqs.py`
 
-4. Análise de Substituições e Variabilidade
+4. Filogenética
+
+5. Análise de Substituições e Variabilidade
 Calcule a matriz de identidade aos pares para identificar a divergencia nucleotidica entre as amostras ativas.
 
-5. Agrupamento por Região Geográfica e Subtipo
+6. Agrupamento por Região Geográfica e Subtipo
 Gere tabelas agregadas e gráficos de calor (heatmaps) que correlacionam o percetual de similaridade genética com o subtipo viral e o continente/pais de isolamento.
 `python scripts/03_analyze.py`
