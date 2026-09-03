@@ -1,10 +1,12 @@
 import os
 import sys
+import subprocess
+
 
 # caminhos dos arquivos
-entrada = "HTLV/data/processed/htlv_aligned.fasta"
+entrada = "HTLV/data/processed/htlv_sequence_aligned.fasta"
 saida = "HTLV/results/iqtree"
-iqtree = r"C:\User\Larissa\Documents\Codigos\FerramentasBioinfo\iqtree.exe"
+iqtree = r"C:\Users\Larissa\Documents\Codigos\FerramentasBioinfo\iqtree3.exe"
 
 # quero garantir que ao rodar essas pasta vao existir e se não existir o os vai cria-las
 
@@ -26,5 +28,16 @@ else:
     print(f"Erro: O executável do IQ-TREE não foi encontrado em {iqtree}")
     sys.exit(1)
 
-# Executar o IQ-TREE
-# Executar pelo terminal, vou abrir meu ambiente virtual (bioinfo)
+# Executar o IQ-TREE => Executar pelo terminal, vou abrir meu ambiente virtual (bioinfo)
+# 1. Montar a lista de argumentos para o terminal
+cmd = [
+    iqtree, # abre a lista
+    "-s", entrada, # "s" => flag de entrada
+    "-m", "MFP",   # "-m" => flag do modelo
+    "-bb", "1000", # "-bb" => flag do bootstrap
+    "-pre", saida
+]
+
+# 2. Executa o comando e aguarda a finalização
+subprocess.run(cmd, check=True)
+    # check=True é fundamental: se o IQ-TREE falhar por qualquer motivo durante a execução, o Python interrompe o script e avisa que ocorreu um erro.
