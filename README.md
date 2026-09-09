@@ -48,9 +48,12 @@ htlv-genomics-pipeline/
 │   ├── figures/                                    # Gráficos e árvores filogenéticas
 │   └── tables/                                     # Tabelas estatísticas
 ├── scripts/
-│   ├── 00_fix_fasta.py                             # Script de sanitização e correção do FASTA
-│   ├── 01_fetch_data.py                            # Filtragem, validação e vínculo de metadados
-│   └── 02_align_seq.py                             # Alinhamento múltiplo via MAFFT
+|   ├── 00_fix_fasta.py                             # Script de sanitização e correção do FASTA
+|   ├── 01_fetch_data.py                            # Filtragem, validação e vínculo de metadados
+|   ├── 02_align_seq.py                             # Alinhamento múltiplo via MAFFT
+|   ├── 03_run_phylo.py                             # Reconstrução da árvore filogenética via IQ-TREE
+|   ├── 04_plot_tree.py                             # Plotagem local rápida da árvore
+|   └── 05_make_itol_metadata.py                    # Geração do arquivo de anotação de metadados para o iTOL
 ├── README.md
 
 # ⚙️ Pré-requisitos
@@ -132,9 +135,19 @@ Existem 3 métodos avaliados no pipeline:
 
 > **Decisão de Design:** Após testar a plotagem local e via iTOL, optou-se exclusivamente pelas imagens geradas pelo **iTOL** para compor os resultados finais e figuras de publicação.
 
+#### 4.2 Geração de Anotações para o iTOL
+
+Para colorir a árvore no iTOL por região geográfica, o script faz a busca cruzada mantendo a equivalência de IDs do FASTA com os metadados do CSV.
+
+**Execução:**
+python scripts/05_make_itol_metadata.py
+
+**Principais Aprendizados de Código nesta Etapa:**
+* **Mapeamento de IDs (De-para):** Uso de dicionário (mapa_ids = dict(zip(ids_curtos, ids_longos))) para relacionar o ID limpo do CSV (ex: AB273635.1) ao ID longo mantido pelo     IQ-TREE na árvore (ex: AB273635.1.522.undefined.-.9033).
+* **Formatos de Anotação iTOL:** Estruturação de arquivo .txt do tipo DATASET_COLORSTRIP com mapeamento automático de paletas de cores (matplotlib.colors) por metadado.
+
 5. Análise de Substituições e Variabilidade
 Calcule a matriz de identidade aos pares para identificar a divergencia nucleotidica entre as amostras ativas.
 
 6. Agrupamento por Região Geográfica e Subtipo
 Gere tabelas agregadas e gráficos de calor (heatmaps) que correlacionam o percetual de similaridade genética com o subtipo viral e o continente/pais de isolamento.
-`python scripts/03_analyze.py`
