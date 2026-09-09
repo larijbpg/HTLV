@@ -1,17 +1,36 @@
 import pandas as pd
 import matplotlib.pyplot as plt
 import matplotlib.colors as mcolors
+from Bio import SeqIO
 
-# configuração dos arquivos e colunas
+# Criar um arquivo que tenha apenas os ids das sequencias aprovadas (ids_aprovados)
+fasta_aprovado = "data/processed/htlv_sequence_clean.fasta"
+
+# 1. Guardar o ID longo (da árvore) e o ID curto (do CSV)
+ids_longos = []
+ids_curtos = []
+
+for sequencia in SeqIO.parse(fasta_aprovado, "fasta"):
+    ids_longos.append(sequencia.id)
+    ids_curtos.append(".".join(sequencia.id.split(".")[:2]))
+
+# 2. Mapeia ID curto -> ID longo original
+mapa_ids = dict(zip(ids_curtos, ids_longos))
+
+# Configuração dos arquivos e colunas
 csv_input = "data/raw/metadata.csv"
 txt_output = "results/figures/itol_geo_strip.txt"
 
 col_id = "Accession Number"
 col_geo = "Geographic Origin"
 
-# carregar o csv
+# Carregar o csv
 df = pd.read_csv(csv_input, sep=";", on_bad_lines="skip")
-# print(df.columns)
+
+# 3. Filtra usando os IDs curtos e cria a coluna com o ID longo da árvore
+df = df[df[col_id].isin(ids_curtos)].copy()
+df["tree_id"] = df[col_id].map(mapa_ids)
+
 # remova linhas sem informação gráfica ou ID
 df = df.dropna(subset=[col_id, col_geo])
 
@@ -49,7 +68,7 @@ with open(txt_output, "w", encoding="utf-8") as f:
     f.write("DATA\n") #dados das amostras 
     for _, row in df.iterrows(): # _(underline) não vou usar o valor desse indice, ele descarta o numero da linha, row guarda as info da amostra atual
     # Passa por cada linha da sua planilha, pega a ID da sequência, descobre a região dela, busca a cor correspondente dessa região no dicionário e escreve uma linha no texto.
-        seq_id = str(row[col_id]).strip()
+        seq_id = str(row["tree_id"]).strip()
         geo = row[col_geo]
         color = cores_por_regiao[geo]
         f.write(f"{seq_id}\t{color}\t{geo}\n")
