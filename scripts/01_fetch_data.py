@@ -4,11 +4,11 @@ from Bio.SeqUtils import gc_fraction
 import os
 
 # Caminhos para os arquivos
-fasta_file = "HTLV/data/raw/htlv_sequences_corrigido.fasta" # arquivo bruto corrigido
-output_clean_fasta = "HTLV/data/processed/htlv_sequence_clean.fasta" # arquivo limpo
-output_report_csv = "HTLV/data/processed/pre-processing_report.csv" # histórico e a justificativa do filtro de dados
+fasta_file = "data/raw/htlv_sequences_corrigido.fasta" # arquivo bruto corrigido
+output_clean_fasta = "data/processed/htlv_env_sequence_clean.fasta" # arquivo limpo
+output_report_csv = "data/processed/pre-processing_report_env.csv" # histórico e a justificativa do filtro de dados
 
-os.makedirs("HTLV/data/processed", exist_ok=True)
+os.makedirs("data/processed", exist_ok=True)
 
 # Leitura do arquivo FASTA usando Biopython
 sequences_info = []
@@ -28,23 +28,25 @@ print("\nPrimeiras sequencias:")
 print(df.head())
 
 # Salvar resumo dos dados - pandas
-df.to_csv("HTLV/data/processed/summary_sequences.csv", index=False) 
+df.to_csv("data/processed/summary_sequences.csv", index=False) 
 # O parâmetro index=False instrui o Pandas a não salvar a coluna de índices numéricos no arquivo CSV final.
 print("\nResumo Salvo em data/processed/summary_sequences.csv!")
 
 # Limpeza das sequencias: sequencias curtas, bases ambíguas (N) e seq sem metadados geográficos
 # critérios de filtro:
-tamanho_minimo = 8000 # genoma completo do HTLV por volta de 9.000bp
+# Foco no gene ENV => possui entre 600 e 1500 pb
+tamanho_minimo = 600  
+tamanho_maximo = 1500
 seq_limpa = []
 rejeitados = [] # serve para armazenar e rastrear o motivo exato pelo qual cada sequência foi descartada (ex: "Tamanho curto", "Muitas ambiguidades" ou "Sem país")
 
 # ler arquivo de metadados para pegar a geografia (se existir)
 # primeiro preciso ver as informações que vieram desse arquivo
-df_meta = pd.read_csv("HTLV/data/raw/metadata.csv", sep=";")
+df_meta = pd.read_csv("data/raw/metadata.csv", sep=";")
 print(df_meta.info())
 
 try:
-    df_meta = pd.read_csv("HTLV/data/raw/metadata.csv", sep=";")
+    df_meta = pd.read_csv("data/raw/metadata.csv", sep=";")
 
     # Extrai apenas a parte principal do ID (ex: "A36594" em vez de "A36594.1")
     ids_raw = df_meta[df_meta["Geographic Origin"].notna()]["Accession Number"].dropna().astype(str)
@@ -64,8 +66,8 @@ except Exception as e:
 
 # Inicializar contadores para o diagnóstico
 total_sequencias = 0
-qtd_maior_8000 = 0
-qtd_menor_8000 = 0
+qtd_maior_1500 = 0
+qtd_menor_600 = 0
 qtd_n_baixo = 0   # N <= 1%
 qtd_n_alto = 0    # N > 1%
 qtd_com_pais = 0
@@ -82,11 +84,11 @@ for sequencia in SeqIO.parse(fasta_file, "fasta"):
     # sequencia.id acessa o id do cabeçalho FASTA lido pelo Biopython
     # aplit(".")[0]: corta o ID no ponto e pega apenas o primeiro pedaço(indice 0), descrtando o .1 que indica a versão da sequencia no GenBank
 
-    # avaliação do tamanho
-    if tamanho >= 8000:
-        qtd_maior_8000 +=1
-    else:
-        qtd_menor_8000 +=1
+    # avaliação do tamanho para exclusão de sequências
+    if tamanho > tamanho_maximo:
+        qtd_maior_1500 +=1
+    elif tamanho < tamanho_minimo: # não usei else para não colocar 800pb na lista de <600
+        qtd_menor_600 +=1
 
     # avaliação do conteudo de "N"
     pct_n = (seq_str.count("N") / tamanho)
@@ -103,19 +105,19 @@ for sequencia in SeqIO.parse(fasta_file, "fasta"):
         qtd_sem_pais +=1
 
     #Aprovação
-    if (tamanho>=8000) and (pct_n <= 0.01) and tem_pais:
+    if (tamanho>=tamanho_minimo) and (tamanho<=tamanho_maximo) and (pct_n <= 0.01) and tem_pais:
         seq_limpa.append(sequencia)
 
 # 4. Exibição dos Relatórios no Terminal
 print("="*20,"RELATÓRIO DE DIAGNÓSTICO DO FASTA","="*20)
 print(f"Total de sequências analisadas: {total_sequencias}")
-print(f"Tamanho >= 8000 bp: {qtd_maior_8000} | Tamanho < 8000 bp: {qtd_menor_8000}")
+print(f"Tamanho > 1500 bp: {qtd_maior_1500} | Tamanho < 600 bp: {qtd_menor_600}")
 print(f"Ambiguidade N <= 1%: {qtd_n_baixo} | Ambiguidade N > 1%: {qtd_n_alto}")
 print(f"Com informação de país: {qtd_com_pais} | Sem informação de país: {qtd_sem_pais}")
 print("="*70)
    
 
-# # salvar o arquivo FASTA limpo
+# salvar o arquivo FASTA limpo
 SeqIO.write(seq_limpa, output_clean_fasta, "fasta")
 
 print(f"\nLimpeza concluída! Sequências aprovadas: {len(seq_limpa)} de {len(df_meta)}")
