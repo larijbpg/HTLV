@@ -46,8 +46,8 @@ regiao_unica = sorted(df[col_geo].unique())
 # sorted(...): organiza essa lista de regiões em ordem alfabética/ ordem ascendente
 # unique_regions = salva esse resultado em uma variável para que o script possa criar a legenda e atribuir uma cor diferente para cada região listada
 cmap = plt.get_cmap(
-    "tab10"
-)  # carrega um mapa de cores pré-definido do Matplotlib chamado "tab10", que possui 10 cores bem distintas entre si.
+    "turbo"
+)  # carrega um mapa de cores pré-definido do Matplotlib chamado "turbo", gera um numero ilimitado de cores distintas sem estipular um numero fixo
 
 cores_por_regiao = (
     {}
@@ -56,9 +56,8 @@ cores_por_regiao = (
 for i, regiao in enumerate(
     regiao_unica
 ):  # loop que percorre a lista de regiões únicas, o enumerate fornece ao mesmo tempo o índice numérico (i: 0, 1, 2...) e o nome da região (regio
-    rgb = cmap(i % 10)[:3]
-    # pega a cor correspondente ao indice i da paleta, extraindo apenas os 3 primeiros valores da dupla(red, green, blue).
-    # Os 10% faz o índice reiniciar caso existam mais de 10 regioes
+    rgb = cmap(i / len(regiao_unica))[:3]
+    # Em vez do resto da divisão (%), ele divide o índice pelo número total de regiões. Isso garante que cada país receba um tom 100% exclusivo.
     cores_por_regiao[regiao] = mcolors.to_hex(rgb)
     # Converte os valores RGB para formato de código hexadecimal (como #FF0000) e salva no dicionário associando à região correspondente.
 
