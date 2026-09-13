@@ -2,15 +2,14 @@ import os
 import sys
 import subprocess
 
-
 # caminhos dos arquivos
-input = "HTLV/data/processed/htlv_sequence_aligned.fasta"
-output = "HTLV/results/iqtree/iqtree"
-iqtree = r"C:\Users\Larissa\Documents\Codigos\FerramentasBioinfo\iqtree3.exe"
+input = "data/processed/htlv_env_sequence_aligned.fasta"
+output = "results/iqtree/iqtree_env"
+iqtree = "iqtree2"
 
 # quero garantir que ao rodar essas pasta vao existir e se não existir o os vai cria-las
 
-os.makedirs("HTLV/results/iqtree", exist_ok=True)
+os.makedirs("results/iqtree", exist_ok=True)
 
 if os.path.exists(input):
     print("Arquivo localizado!")
@@ -21,12 +20,12 @@ else:
     # (1) pq é o código de saída que avisa o computador que paramos por causa de um erro
     #(0) indicaria que deu certo/sucesso
 
-# valida o executável do IQ-TREE
-if os.path.exists(iqtree):
-    print("Executável do IQ-TREE localizado!")
-else:
-    print(f"Erro: O executável do IQ-TREE não foi encontrado em {iqtree}")
-    sys.exit(1)
+# valida o executável do IQ-TREE => não precisa pois estou rodando no LINUX agora
+# if os.path.exists(iqtree):
+#     print("Executável do IQ-TREE localizado!")
+# else:
+#     print(f"Erro: O executável do IQ-TREE não foi encontrado em {iqtree}")
+#     sys.exit(1)
 
 # Executar o IQ-TREE => Executar pelo terminal, vou abrir meu ambiente virtual (bioinfo)
 # 1. Montar a lista de argumentos para o terminal
