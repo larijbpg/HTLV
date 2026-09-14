@@ -3,7 +3,7 @@ import sys
 import subprocess
 
 # caminhos dos arquivos
-input = "data/processed/htlv_env_sequence_aligned.fasta"
+input = "results/aligments/htlv_env_sequence_aligned.fasta"
 output = "results/iqtree/iqtree_env"
 iqtree = "iqtree2"
 

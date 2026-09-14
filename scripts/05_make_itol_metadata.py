@@ -4,7 +4,7 @@ import pandas as pd
 from Bio import SeqIO
 
 # 1. Usar o alinhamento que efetivamente gerou a árvore do IQ-TREE
-fasta_aprovado = "data/processed/htlv_env_sequence_aligned.fasta"
+fasta_aprovado = "results/aligments/htlv_env_sequence_aligned.fasta"
 
 ids_longos = []
 ids_curtos = []

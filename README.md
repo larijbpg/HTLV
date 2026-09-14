@@ -1,6 +1,6 @@
 # 🧬 HTLV Molecular Diversity & Phylogeography Pipeline
 
-Este repositório contém um pipeline em Python para análise de diversidade genética, classificação de subtipos e caracterização geográfica de sequências do vírus T-linfotrópico humano (HTLV)
+Este repositório contém um pipeline em Python para obtenção, pré-processamento e alinhamento de sequências do vírus T-linfotrópico humano(HTLV), seguido de análise de mutação e identificação de variantes, caracterização geográfica e classificação de subtipos por reconstrução filogenética.
 
 O objetivo é automatizar o dowload, pré-processamento, alinhamento e análise comparativa de amostras de HTLV armazenadas em bancos de dados públicos de bioinformática.
 
@@ -25,39 +25,37 @@ O objetivo é automatizar o dowload, pré-processamento, alinhamento e análise 
 
 O pipeline processa arquivos genômicos no formato FASTA acompanhados de metadados (como país de origem, tipo/subtipo e ano de isolamento) para:
 
-1. Calcular a estatística descritivas das sequencias (tamanho, conteúdo GC)
-2. Realizar alinhamento multiplo de sequências (MSA)
-3. Filogenética
+1. Calcular a estatísticas descritivas das sequencias (tamanho, conteúdo GC)
+2. Realizar alinhamento múltiplo de sequências (MSA)
+3. Filogenética (IQ-TREE, iTOL)
 4. Identificar posições polimórficas (mutações/SNPs) e calcular matrizes de identidade percentual.
 5. Cruzar variações genéticas com a distribuição geográfica e subtipos de HTLV (HTLV-1, HTLV-2, etc.)
 
 # 📁 Estrutura do Projeto
 
 htlv-genomics-pipeline/
-├── data/
-│   ├── raw/
-│   │   ├── htlv_sequences.fasta                    # Sequências brutas baixadas
-│   │   ├── htlv_sequences_corrigido.fasta          # Sequências com quebras de linha ajustadas
-│   │   └── metadata.csv                            # Tabela com metadados geográficos
-│   └── processed/
-│       ├── htlv_sequence_clean.fasta               # Sequências filtradas pós-validação
-│       ├── htlv_sequence_aligned.fasta             # Sequências alinhadas pelo MAFFT
-│       └── summary_sequences.csv                   # Resumo do processamento
-├── results/
-│   ├── alignments/                                 # Arquivos de alinhamento finais
-│   ├── figures/                                    # Gráficos e árvores filogenéticas
-│   └── tables/                                     # Tabelas estatísticas
-├── scripts/
-|   ├── 00_fix_fasta.py                             # Script de sanitização e correção do FASTA
-|   ├── 01_fetch_data.py                            # Filtragem, validação e vínculo de metadados
-|   ├── 02_align_seq.py                             # Alinhamento múltiplo via MAFFT
-|   ├── 03_run_phylo.py                             # Reconstrução da árvore filogenética via IQ-TREE
-|   ├── 04_plot_tree.py                             # Plotagem local rápida da árvore
-|   └── 05_make_itol_metadata.py                    # Geração do arquivo de anotação de metadados para o iTOL
-├── README.md
+- data
+    - raw (dados brutos)
+    - processed (dados limpos e filtrados)
+- htlv_env (ambiente virtual)
+- results
+    - aligments (sequencias alinhadas)
+    - figures (figuras geradas a partir do projeto)
+    - iqtree (arquivos gerados pelo IQ-TREE)
+    - tables
+- scripts
+    - 00_fix_fasta.py
+    - 01_fetch_data.py
+    - 02_align_seq.py
+    - 03_run_phylo.py
+    - 04_plot_tree.py
+    - 05_make_itol_metadata.py
+- README.md
+- .gitignore
+
 
 # ⚙️ Pré-requisitos
-* Python 3.8+
+* Python 3+
 * Ferramenta de alinhamento multiplo externa (opcional, mas recomendada): MAFFT, Clustal Omega ou uso dos alinhadores internos do Biopython
 * Para a execução dos scripts de alinhamento e filogenia sem a necessidade de instalação global no sistema, as ferramentas executáveis (como o MAFFT e IQ-TREE) foram centralizadas localmente na pasta `FerramentasBioinfo/` na raiz do ambiente de desenvolvimento. 
 
@@ -65,7 +63,7 @@ htlv-genomics-pipeline/
 
 # 🚀 Instalação e Configuração
 
-pip install biopython pandas matplotlib seaborn
+pip install biopython pandas matplotlib seaborn 
 
 # 🔄 Passo a Passo da Execução
 
@@ -91,12 +89,28 @@ Salve o arquivo de sequências em `data/raw/htlv_sequences.fasta` e a tabela de 
 
 `python scripts/00_fix_fasta.py`
 
+### 1.2 Correção de Leitura de Metadados e Compatibilização com a Árvore (Debugging de Dados)
+
+**Problema Encontrado:** O script `05_make_itol_metadata.py` falhava ao ler `metadata.csv` com `pandas.errors.ParserError`, indicando incompatibilidade no número de campos por linha. Após corrigido, o arquivo de anotação gerado não coloriu nenhum galho da árvore no iTOL (avisos de "Couldn't find ID... in the tree" para centenas de IDs).
+
+**Investigação Sistemática Realizada:**
+* **Inspeção manual de linhas problemáticas:** Contagem de separadores por linha (`linha.count(",")`) para isolar registros malformados.
+* **Verificação do separador real do arquivo:** Identificado que o CSV usa `;` como delimitador, não `,` (padrão do Pandas).
+* **Conferência de nomes de colunas:** Uso de `df.columns` para confirmar a grafia exata (`Accession Number`, não `Acession Number`).
+* **Comparação de IDs entre arquivos:** Verificado que `metadata.csv` contém todas as sequências baixadas originalmente (5301), enquanto a árvore filogenética contém apenas as sequências aprovadas pelo filtro de qualidade (257), causando incompatibilidade de IDs.
+
+**Solução Automática:**
+* `pd.read_csv(csv_input, sep=";", on_bad_lines="skip")`: define o separador correto e ignora linhas malformadas remanescentes.
+* `SeqIO.parse(fasta_aprovado, "fasta")`: extrai os IDs das sequências aprovadas diretamente do FASTA já filtrado, usados como referência.
+* `df[df[col_id].isin(ids_aprovados)]`: filtra o metadata, mantendo apenas as linhas correspondentes às sequências presentes na árvore.
+
+`python scripts/05_make_itol_metadata.py`
 
 2. Pré-processamento e Validação
 
 Execute a filtragem inicial para remover sequencias muito curtas, com bases ambiguas ou sem metadados geográficos/subtipo associados.
 
-- Tamanho: Remover sequências muito curtas (<8000bp), já que o genoma do HTLV-1 tem aprox. 9000bp.
+- Tamanho: Remover sequências menores que 600 pb e maiores que 1500 pb (tamanho referencia do gene env baseado em artigos científicos do NCBI)
 - Qualidade de bases: Remover sequências com excesso de bases ambíguas (por exemplo, mais de 1% ou 5% de letras fora de A, C, G, T).
 - Metadados Geográficos: Verificar se no cabeçalho/descrição do arquivo FASTA ou no registro do NCBI existe a indicação do país/região de origem (essencial para estudos de filogeografia e epidemiologia molecular).
 
@@ -125,7 +139,7 @@ Como o vírus sofre mutações, as sequências brutas vêm com tamanhos ligeiram
 
 4. Filogenética e Visualização
 
-A reconstrução da árvore filogenética é realizada via **IQ-TREE 3** utilizando o método de Máxima Verossimilhança com suporte de nós por Ultrafast Bootstrap (UFBoot) e enraizamento pelo ponto médio (*midpoint rooting*).
+A reconstrução da árvore filogenética é realizada via **IQ-TREE 2** utilizando o método de Máxima Verossimilhança com suporte de nós por Ultrafast Bootstrap (UFBoot) e enraizamento pelo ponto médio (*midpoint rooting*).
 
 #### 4.1 Abordagens para Gerar/Visualizar a Árvore
 Existem 3 métodos avaliados no pipeline:
@@ -143,8 +157,9 @@ Para colorir a árvore no iTOL por região geográfica, o script faz a busca cru
 python scripts/05_make_itol_metadata.py
 
 **Principais Aprendizados de Código nesta Etapa:**
-* **Mapeamento de IDs (De-para):** Uso de dicionário (mapa_ids = dict(zip(ids_curtos, ids_longos))) para relacionar o ID limpo do CSV (ex: AB273635.1) ao ID longo mantido pelo     IQ-TREE na árvore (ex: AB273635.1.522.undefined.-.9033).
+* **Mapeamento de IDs (De-para):** Uso de dicionário (mapa_ids = dict(zip(ids_curtos, ids_longos))) para relacionar o ID limpo do CSV (ex: AB273635.1) ao ID longo mantido pelo IQ-TREE na árvore (ex: AB273635.1.522.undefined.-.9033).
 * **Formatos de Anotação iTOL:** Estruturação de arquivo .txt do tipo DATASET_COLORSTRIP com mapeamento automático de paletas de cores (matplotlib.colors) por metadado.
+* **Colormap:** Para evitar colisão de cores entre regiões geográficas, foi usado o colormap contínuo "turbo"
 
 5. Análise de Substituições e Variabilidade
 Calcule a matriz de identidade aos pares para identificar a divergencia nucleotidica entre as amostras ativas.

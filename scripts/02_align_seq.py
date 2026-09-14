@@ -7,7 +7,7 @@ mafft = "mafft"
 
 # caminhos dos arquivos de dados do gene env
 entrada = "data/processed/htlv_env_sequence_clean.fasta"
-saida_alinhada = "data/processed/htlv_env_sequence_aligned.fasta"
+saida_alinhada = "results/aligments/htlv_env_sequence_aligned.fasta"
 
 # Executar o Alinhamento Multiplo de Sequências (MSA)
 print("Iniciando o Alinhamento das sequencias do HTLV com MAFFT...")
