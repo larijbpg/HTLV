@@ -49,6 +49,7 @@ for sequencia in SeqIO.parse(arq_entrada, "fasta"):
         "id": sequencia.id,
         "sequencia": sequencia.seq
     })
+# Vou mostrar as primeiras 5 primeiras sequencias da lista de sequencias
 print(seq_lista[0]["id"])
 
 # Quarto: comparar cada posição do alinhamento entre todas as sequências, pra achar mutações
@@ -74,3 +75,13 @@ for i in range(0, tamanho_esperado): # para cada coluna numa escala de 0 a 4704
         })
 
 print(f"Total de posições com mutação: {len(mutacoes)}")
+porcentagem_mutacoes = (len(mutacoes) / tamanho_esperado * 100)
+print(f"Porcentagem de mutações: {porcentagem_mutacoes:.2f}%")
+
+# Avaliação da porcentagem de mutações
+if porcentagem_mutacoes < 5:
+    print(f"Porcentagem de mutações normal: {porcentagem_mutacoes:.2f}")
+elif porcentagem_mutacoes >= 5 and porcentagem_mutacoes <= 30:
+    print(f"Porcentagem de mutações considerável. Mas se for o caso de uma amostragem diversa, está razoável: {porcentagem_mutacoes:.2f}")
+elif porcentagem_mutacoes > 30:
+    print(f"Porcentagem de mutações alta: {porcentagem_mutacoes:.2f}. Revise o alinhamento ou o filtro de tamanho de sequências.")
