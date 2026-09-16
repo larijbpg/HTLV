@@ -32,9 +32,10 @@ for sequencia in SeqIO.parse(arq_entrada, "fasta"):
             })
             print(f"Erro: A sequencia {sequencia.id} tem um tamanho:{len(sequencia.seq)}. O esperado era {tamanho_esperado}")  
 
-# Terceiro: vou criar um DataFrame com o pandas, apartir dessas sequências erradas (para possíveis consultas futuras)
-df = pd.DataFrame(seq_erro) 
-df.to_csv(arq_saida, index=False) # o df vai ser criado no mesmo caminho de "arq_saida"
+# Terceiro: APENAS SE TIVER alguma sequencia dentro da lista seq_erro, vou criar um DataFrame com o pandas (para possíveis consultas futuras)
+if seq_erro: 
+    df = pd.DataFrame(seq_erro) 
+    df.to_csv(arq_saida, index=False) # o df vai ser criado no mesmo caminho de "arq_saida"
 
 print(f"Total de sequências com tamanho incorreto: {len(seq_erro)}")
 print(f"O tamanho das sequências é: {tamanho_esperado}")
