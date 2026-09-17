@@ -49,8 +49,9 @@ for sequencia in SeqIO.parse(arq_entrada, "fasta"):
         "id": sequencia.id,
         "sequencia": sequencia.seq
     })
-# Vou mostrar as primeiras 5 primeiras sequencias da lista de sequencias
-print(seq_lista[0]["id"])
+# Vou mostrar os primeiros 5 ids da lista de sequências
+for sequencia in seq_lista[:5]:
+    print(sequencia["id"])
 
 # Quarto: comparar cada posição do alinhamento entre todas as sequências, pra achar mutações
 
@@ -66,7 +67,7 @@ for i in range(0, tamanho_esperado): # para cada coluna numa escala de 0 a 4704
         letras_na_posicao.append(letra) # guarda essa letra na lista da posição atual
 
     letras_diferentes = set(letras_na_posicao)  # 'set' remove repetidos, só sobra o que é diferente
-    letras_diferentes.discard("-")
+    letras_diferentes.discard("-") # não vai comparar os "-"
 
     if len(letras_diferentes) > 1:  # se sobrou mais de uma letra diferente, é mutação
         mutacoes.append({
@@ -85,3 +86,32 @@ elif porcentagem_mutacoes >= 5 and porcentagem_mutacoes <= 30:
     print(f"Porcentagem de mutações considerável. Mas se for o caso de uma amostragem diversa, está razoável: {porcentagem_mutacoes:.2f}")
 elif porcentagem_mutacoes > 30:
     print(f"Porcentagem de mutações alta: {porcentagem_mutacoes:.2f}. Revise o alinhamento ou o filtro de tamanho de sequências.")
+
+
+# Teste: calcular o MAF de UMA posição só (a primeira que está em "mutacoes")
+
+teste = mutacoes[0]  # pego o primeiro dicionário da lista de mutações
+posicao_teste = teste["posicao"]  # pego só o número da posição, tipo 2
+
+# recrio a lista de letras, mas agora só dessa posição específica
+letras_teste = []
+for sequencia in seq_lista:
+    letra = sequencia["sequencia"][posicao_teste]
+    letras_teste.append(letra)
+
+# conto quantas vezes cada letra aparece
+contagem = {}
+for letra in letras_teste:
+    if letra in contagem:
+        contagem[letra] += 1
+    else:
+        contagem[letra] = 1
+
+# calculo o MAF dessa posição
+minoritario = min(contagem.values())
+total_sequencias = len(seq_lista)
+maf = minoritario / total_sequencias
+
+print(f"Posição testada: {posicao_teste}")
+print(f"Contagem de letras: {contagem}")
+print(f"MAF: {maf:.4f}")
