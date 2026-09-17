@@ -1,6 +1,7 @@
 from pathlib import Path # portabilidade entre sistemas (Windows/LINUX)
 from Bio import SeqIO
 import pandas as pd
+import matplotlib.pyplot as plt
 
 # Primeiro passo é definir os caminhos
 
@@ -8,6 +9,8 @@ arq_entrada = Path("results/aligments/htlv_env_sequence_aligned.fasta")
 arq_saida = Path("results/tables/sequence_lengths.csv") # cria uma tabela
 arq_limpo = Path("data/processed/htlv_env_sequence_clean.fasta")
 arq_mutations = Path("results/tables/htlv_seq_mutations.csv")
+grafico = Path("results/figures/dispersao_env.png")
+
 # 1. Confirmar se o comprimento das sequencias estão corretos para a análise (se o filtro está correto e se elas tem o mesmo tamanho)
 
 # Primeiro: vou conferir se tem sequencias fora do filtro e mostrar o id e o tamanho que elas tem (se existir)
@@ -94,7 +97,8 @@ for i in range(0, tamanho_esperado):
             if maf >= 0.01:
                 mutacoes.append({
                     "posicao": i,
-                    "letras": letras_diferentes
+                    "letras": letras_diferentes,
+                    "maf": maf # vou usar esse valor para o gráfico de dispersão
                 })
 
 print(f"Total de posições com mutação: {len(mutacoes)}")
@@ -112,4 +116,16 @@ elif porcentagem_mutacoes > 30:
 if mutacoes: # se existir mutacoes ai vou criar o arquivo csv
     df = pd.DataFrame(mutacoes)
     df.to_csv(arq_mutations, index= False)
-    
+
+# Criar um gráfico para visualizar as mutações: Matplotlib => Manhattan plot (dispersão(scatter)) => ver regiões do genes mais variáveis 
+    # vou precisar do valor de maf e das posições, portanto, duas listas (eixo X e Y)
+lista_p = []
+lista_m = []
+
+for mutacao in mutacoes:
+    lista_p.append(mutacao["posicao"])
+    lista_m.append(mutacao["maf"])
+
+# criar o gráfico agora
+plt.scatter(lista_p, lista_m)
+plt.savefig(grafico)
