@@ -7,7 +7,7 @@ import pandas as pd
 arq_entrada = Path("results/aligments/htlv_env_sequence_aligned.fasta")
 arq_saida = Path("results/tables/sequence_lengths.csv") # cria uma tabela
 arq_limpo = Path("data/processed/htlv_env_sequence_clean.fasta")
-
+arq_mutations = Path("results/tables/htlv_seq_mutations.csv")
 # 1. Confirmar se o comprimento das sequencias estão corretos para a análise (se o filtro está correto e se elas tem o mesmo tamanho)
 
 # Primeiro: vou conferir se tem sequencias fora do filtro e mostrar o id e o tamanho que elas tem (se existir)
@@ -109,3 +109,7 @@ elif porcentagem_mutacoes >= 5 and porcentagem_mutacoes <= 30:
 elif porcentagem_mutacoes > 30:
     print(f"Porcentagem de mutações alta: {porcentagem_mutacoes:.2f}. Revise o alinhamento ou o filtro de tamanho de sequências.")
 
+if mutacoes: # se existir mutacoes ai vou criar o arquivo csv
+    df = pd.DataFrame(mutacoes)
+    df.to_csv(arq_mutations, index= False)
+    
