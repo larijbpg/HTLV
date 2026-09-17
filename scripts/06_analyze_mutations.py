@@ -58,22 +58,44 @@ for sequencia in seq_lista[:5]:
 mutacoes = []  # vou guardar aqui as posições onde teve mais de uma letra (por exemplo: na coluna 0 todas as letras teriam que ser iguais)
 
 # Vou percorrer cada posição do alinhamento de 0 até o tamanho esperado (4704), ou seja, percorrer colunas - pq sei que todas tem o mesmo tamanho
-for i in range(0, tamanho_esperado): # para cada coluna numa escala de 0 a 4704
-    letras_na_posicao = []  # letras de cada sequência só na posição i
 
-    # para essa posição i(coluna), percorre todas as sequencias
+for i in range(0, tamanho_esperado):
+    letras_na_posicao = []
+
     for sequencia in seq_lista:
-        letra = sequencia["sequencia"][i] # a letra vai ser a posição i da sequencia (via chave do dicionario)
-        letras_na_posicao.append(letra) # guarda essa letra na lista da posição atual
+        letra = sequencia["sequencia"][i]
+        letras_na_posicao.append(letra)
 
-    letras_diferentes = set(letras_na_posicao)  # 'set' remove repetidos, só sobra o que é diferente
-    letras_diferentes.discard("-") # não vai comparar os "-"
+    letras_diferentes = set(letras_na_posicao) # tira as letras nessa posição que estão duplicadas 
+    letras_diferentes.discard("-") #descarto os "-" das letras naquela posição
 
-    if len(letras_diferentes) > 1:  # se sobrou mais de uma letra diferente, é mutação
-        mutacoes.append({
-            "posicao": i,
-            "letras": letras_diferentes
-        })
+    if len(letras_diferentes) > 1: # se eu tiver mais que uma letra nessa posição
+        # conto quantas vezes cada letra aparece nessa posição
+        contagem = {}
+        for letra in letras_na_posicao:
+            if letra in contagem:
+                contagem[letra] += 1 # se ja tiver a letra, adiciona 1
+            else:
+                contagem[letra] = 1 # se não tiver a letra, coloca 1
+
+        # calculo o MAF (usando só as letras reais, sem contar o "-")
+        contagem_sem_gap = {}
+        for letra, valor in contagem.items():
+            # contagem.items(): devolve pares de (chave, valor) do dicionário contagem. Tipo, se contagem = {"C": 2, "-": 2337}, o .items() te dá ("C", 2) e ("-", 2337).
+            if letra != "-": # só passa o que nao for "-"
+                contagem_sem_gap[letra] = valor # cria/atualiza a chave "letra" no novo dicionário
+        
+        if contagem_sem_gap:  # só calcula se sobrou alguma letra real
+            minoritario = min(contagem_sem_gap.values())
+            total_sequencias = len(seq_lista)
+            maf = minoritario / total_sequencias
+
+            # só guarda como mutação se passar no corte de MAF que é acima de 1%
+            if maf >= 0.01:
+                mutacoes.append({
+                    "posicao": i,
+                    "letras": letras_diferentes
+                })
 
 print(f"Total de posições com mutação: {len(mutacoes)}")
 porcentagem_mutacoes = (len(mutacoes) / tamanho_esperado * 100)
@@ -87,31 +109,3 @@ elif porcentagem_mutacoes >= 5 and porcentagem_mutacoes <= 30:
 elif porcentagem_mutacoes > 30:
     print(f"Porcentagem de mutações alta: {porcentagem_mutacoes:.2f}. Revise o alinhamento ou o filtro de tamanho de sequências.")
 
-
-# Teste: calcular o MAF de UMA posição só (a primeira que está em "mutacoes")
-
-teste = mutacoes[0]  # pego o primeiro dicionário da lista de mutações
-posicao_teste = teste["posicao"]  # pego só o número da posição, tipo 2
-
-# recrio a lista de letras, mas agora só dessa posição específica
-letras_teste = []
-for sequencia in seq_lista:
-    letra = sequencia["sequencia"][posicao_teste]
-    letras_teste.append(letra)
-
-# conto quantas vezes cada letra aparece
-contagem = {}
-for letra in letras_teste:
-    if letra in contagem:
-        contagem[letra] += 1
-    else:
-        contagem[letra] = 1
-
-# calculo o MAF dessa posição
-minoritario = min(contagem.values())
-total_sequencias = len(seq_lista)
-maf = minoritario / total_sequencias
-
-print(f"Posição testada: {posicao_teste}")
-print(f"Contagem de letras: {contagem}")
-print(f"MAF: {maf:.4f}")
