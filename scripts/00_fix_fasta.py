@@ -22,6 +22,10 @@ for linha in linhas:
         # Se for linha de sequência, remove caracteres que não são nucleotídeos válidos (ex: números, Z, símbolos)
         # re.sub substitui tudo que NÃO for A, T, C, G, N ou degraus IUPAC por nada ("")
         seq_limpa = re.sub(r'[^ATCGNRYSWKMBDHVatcgnryswkmbdhv-]', '', linha)
+
+        # TODO: padronizar para maiúsculas com seq_limpa.upper() antes de continuar
+        # Descoberto em 06_analyze_mutations.py: sem isso, 'C' e 'c' são contados como alelos diferentes na análise de mutações
+        # Requer rodar novamente todo o pipeline (00 -> 01 -> 02..) após aplicar.
         
         # garante que só adiciona a linha se sobrou algum nucleotídeo após a limpeza
         if seq_limpa:

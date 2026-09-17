@@ -47,7 +47,7 @@ seq_lista = []
 for sequencia in SeqIO.parse(arq_entrada, "fasta"):
     seq_lista.append({
         "id": sequencia.id,
-        "sequencia": sequencia.seq
+        "sequencia": sequencia.seq.upper()
     })
 # Vou mostrar os primeiros 5 ids da lista de sequências
 for sequencia in seq_lista[:5]:
