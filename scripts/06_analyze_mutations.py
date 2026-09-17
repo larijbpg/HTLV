@@ -128,4 +128,9 @@ for mutacao in mutacoes:
 
 # criar o gráfico agora
 plt.scatter(lista_p, lista_m)
+# Elementos do gráfico
+plt.title("Distribuição de MAF por Posição no Gene env (HTLV)")
+plt.xlabel("Posição no alinhamento")
+plt.ylabel("MAF (frequência de alelo minoritário)")
 plt.savefig(grafico)
+
