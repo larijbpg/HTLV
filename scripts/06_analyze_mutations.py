@@ -98,7 +98,8 @@ for i in range(0, tamanho_esperado):
                 mutacoes.append({
                     "posicao": i,
                     "letras": letras_diferentes,
-                    "maf": maf # vou usar esse valor para o gráfico de dispersão
+                    "maf": maf, # vou usar esse valor para o gráfico de dispersão
+                    "contagem" : contagem_sem_gap # vou ter um ranking de letras por posição
                 })
 
 print(f"Total de posições com mutação: {len(mutacoes)}")
