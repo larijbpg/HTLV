@@ -1,8 +1,7 @@
 # 🧬 HTLV Molecular Diversity & Phylogeography Pipeline
+Este repositório contém um pipeline em Python para obtenção, pré-processamento e alinhamento de sequências do vírus T-linfotrópico humano (HTLV), seguido de análise de mutação e identificação de variantes, caracterização geográfica e classificação de subtipos por reconstrução filogenética.
 
-Este repositório contém um pipeline em Python para obtenção, pré-processamento e alinhamento de sequências do vírus T-linfotrópico humano(HTLV), seguido de análise de mutação e identificação de variantes, caracterização geográfica e classificação de subtipos por reconstrução filogenética.
-
-O objetivo é automatizar o dowload, pré-processamento, alinhamento e análise comparativa de amostras de HTLV armazenadas em bancos de dados públicos de bioinformática.
+O objetivo é automatizar o download, pré-processamento, alinhamento e análise comparativa de amostras de HTLV armazenadas em bancos de dados públicos de bioinformática.
 
 # 📌 Sumário
 
@@ -18,18 +17,24 @@ O objetivo é automatizar o dowload, pré-processamento, alinhamento e análise 
     5. Análise de Substituições e Variabilidade
     6. Agrupamento por Região Geográfica e Subtipo
 * Estrutura dos Dados de Entrada
-* Resultados Esperados
-
+* Resultados 
 
 # 🛠 Visão Geral
 
 O pipeline processa arquivos genômicos no formato FASTA acompanhados de metadados (como país de origem, tipo/subtipo e ano de isolamento) para:
 
-1. Calcular a estatísticas descritivas das sequencias (tamanho, conteúdo GC)
+1. Calcular as estatísticas descritivas das sequencias (tamanho, conteúdo GC)
 2. Realizar alinhamento múltiplo de sequências (MSA)
 3. Filogenética (IQ-TREE, iTOL)
 4. Identificar posições polimórficas (mutações/SNPs) e calcular matrizes de identidade percentual.
 5. Cruzar variações genéticas com a distribuição geográfica e subtipos de HTLV (HTLV-1, HTLV-2, etc.)
+
+> **Nota sobre o escopo do projeto:** O pipeline foi inicialmente desenvolvido e executado utilizando o **genoma completo** do HTLV. Em uma fase posterior, o escopo foi refinado para focar exclusivamente no **gene env**, com um filtro de tamanho específico (600-1500 pb) aplicado desde a etapa de obtenção de dados. Por esse motivo, algumas seções deste documento (referentes a etapas executadas antes da mudança) mencionam números de sequências aprovadas da versão com genoma completo (ex: 257), enquanto os resultados mais recentes refletem a versão com o gene `env` (ex: 2341 sequências aprovadas de 5301).
+Portanto: 
+    - Total baixado: 5.302
+    - Após limpeza: 5.302
+    - Aprovadas - versão genoma completo: 257
+    - Aprovadas - versão gene env (600-1500pb): 2.339
 
 # 📁 Estrutura do Projeto
 
@@ -42,7 +47,7 @@ htlv-genomics-pipeline/
     - aligments (sequencias alinhadas)
     - figures (figuras geradas a partir do projeto)
     - iqtree (arquivos gerados pelo IQ-TREE)
-    - tables
+    - tables (tabelas geradas dos arquivos)
 - scripts
     - 00_fix_fasta.py
     - 01_fetch_data.py
@@ -50,13 +55,14 @@ htlv-genomics-pipeline/
     - 03_run_phylo.py
     - 04_plot_tree.py
     - 05_make_itol_metadata.py
+    - 06_analyze_mutations.py
 - README.md
+- REPORT.md
 - .gitignore
-
 
 # ⚙️ Pré-requisitos
 * Python 3+
-* Ferramenta de alinhamento multiplo externa (opcional, mas recomendada): MAFFT, Clustal Omega ou uso dos alinhadores internos do Biopython
+* Ferramenta de alinhamento multiplo externa: MAFFT
 * Para a execução dos scripts de alinhamento e filogenia sem a necessidade de instalação global no sistema, as ferramentas executáveis (como o MAFFT e IQ-TREE) foram centralizadas localmente na pasta `FerramentasBioinfo/` na raiz do ambiente de desenvolvimento. 
 
 > **Nota:** Por conterem arquivos binários executáveis, os arquivos desta pasta estão ignorados pelo versionamento (`.gitignore`).
@@ -72,8 +78,6 @@ pip install biopython pandas matplotlib seaborn
 Baixe as sequências de HTLV do HTLV Database, NCBI Virus ou GenBank no formato FASTA.
 Salve o arquivo de sequências em `data/raw/htlv_sequences.fasta` e a tabela de metadados correspondente em `data/raw/metadata.csv`
 
-**Alternativa via script:** Você pode usar a ferramenta Bio.Entrez para buscar diretamente do GenBank via terminal usando IDs de acesso.
-
 ### 1.1 Correção de Formatação FASTA (Debugging de Arquivo)
 
 **Problema Encontrado:** O MAFFT finalizava o alinhamento sem erros de terminal, mas gerava o arquivo final vazio (0 bytes). A causa raiz foi a presença de cabeçalhos (`>`) colados na mesma linha no arquivo baixado, quebrando o padrão FASTA.
@@ -88,23 +92,6 @@ Salve o arquivo de sequências em `data/raw/htlv_sequences.fasta` e a tabela de 
 * `"\n".join(linhas)`: Reestruturação completa da sintaxe do arquivo.
 
 `python scripts/00_fix_fasta.py`
-
-### 1.2 Correção de Leitura de Metadados e Compatibilização com a Árvore (Debugging de Dados)
-
-**Problema Encontrado:** O script `05_make_itol_metadata.py` falhava ao ler `metadata.csv` com `pandas.errors.ParserError`, indicando incompatibilidade no número de campos por linha. Após corrigido, o arquivo de anotação gerado não coloriu nenhum galho da árvore no iTOL (avisos de "Couldn't find ID... in the tree" para centenas de IDs).
-
-**Investigação Sistemática Realizada:**
-* **Inspeção manual de linhas problemáticas:** Contagem de separadores por linha (`linha.count(",")`) para isolar registros malformados.
-* **Verificação do separador real do arquivo:** Identificado que o CSV usa `;` como delimitador, não `,` (padrão do Pandas).
-* **Conferência de nomes de colunas:** Uso de `df.columns` para confirmar a grafia exata (`Accession Number`, não `Acession Number`).
-* **Comparação de IDs entre arquivos:** Verificado que `metadata.csv` contém todas as sequências baixadas originalmente (5301), enquanto a árvore filogenética contém apenas as sequências aprovadas pelo filtro de qualidade (257), causando incompatibilidade de IDs.
-
-**Solução Automática:**
-* `pd.read_csv(csv_input, sep=";", on_bad_lines="skip")`: define o separador correto e ignora linhas malformadas remanescentes.
-* `SeqIO.parse(fasta_aprovado, "fasta")`: extrai os IDs das sequências aprovadas diretamente do FASTA já filtrado, usados como referência.
-* `df[df[col_id].isin(ids_aprovados)]`: filtra o metadata, mantendo apenas as linhas correspondentes às sequências presentes na árvore.
-
-`python scripts/05_make_itol_metadata.py`
 
 2. Pré-processamento e Validação
 
@@ -122,11 +109,6 @@ Realize o alinhamento multiplo das sequencias para alinhar regiões homologas (c
 Ou seja, Essa parte trata de organizar visualmente as sequências do HTLV para que a mesma região do vírus seja comparada exatamente no mesmo ponto em todas as amostras.
 Como o vírus sofre mutações, as sequências brutas vêm com tamanhos ligeiramente diferentes. O alinhamento múltiplo insere lacunas (gaps, marcados por traços -) nas sequências para que os genes correspondentes (regiões homólogas) fiquem emparelhados coluna por coluna.
 
-**gag:** Codifica as proteínas estruturais do capsídeo e do nucleocapsídeo do vírus
-**pol:** Codifica as enzimas essenciais para a replicação viral: a Transcriptase Reversa, Integrase e a Protease.
-**env:** Codifica as glicoproteínas da superfície do vírus que interagem com os receptores das células humanas para permitir a infecção.
-**região LTR:** São sequências não codificantes localizadas nas extremidades do genoma proviral que funcionam como promotoras e reguladoras da transcrição do vírus.
-
 **Execução:**
 `python scripts/02_align_seq.py`
 
@@ -135,7 +117,7 @@ Como o vírus sofre mutações, as sequências brutas vêm com tamanhos ligeiram
 * **`Seq` vs. `str`:** Conversão de objetos Biopython para texto puro (`str(sequencia.seq).upper()`) garantindo compatibilidade com métodos nativos de string e padronização de bases em maiúsculas.
 * **Resiliência do Pipeline:** Uso de blocos `try / except Exception as e` para captura de exceções sem derrubar o fluxo completo de processamento.
 
-`python scripts/02_align_seqs.py`
+`python scripts/02_align_seq.py`
 
 4. Filogenética e Visualização
 
@@ -161,8 +143,38 @@ python scripts/05_make_itol_metadata.py
 * **Formatos de Anotação iTOL:** Estruturação de arquivo .txt do tipo DATASET_COLORSTRIP com mapeamento automático de paletas de cores (matplotlib.colors) por metadado.
 * **Colormap:** Para evitar colisão de cores entre regiões geográficas, foi usado o colormap contínuo "turbo"
 
-5. Análise de Substituições e Variabilidade
-Calcule a matriz de identidade aos pares para identificar a divergencia nucleotidica entre as amostras ativas.
+### 4.3 Correção de Leitura de Metadados e Compatibilização com a Árvore (Debugging de Dados)
+
+**Problema Encontrado:** O script `05_make_itol_metadata.py` falhava ao ler `metadata.csv` com `pandas.errors.ParserError`, indicando incompatibilidade no número de campos por linha. Após corrigido, o arquivo de anotação gerado não coloriu nenhum galho da árvore no iTOL (avisos de "Couldn't find ID... in the tree" para centenas de IDs).
+
+**Investigação Sistemática Realizada:**
+* **Inspeção manual de linhas problemáticas:** Contagem de separadores por linha (`linha.count(",")`) para isolar registros malformados.
+* **Verificação do separador real do arquivo:** Identificado que o CSV usa `;` como delimitador, não `,` (padrão do Pandas).
+* **Conferência de nomes de colunas:** Uso de `df.columns` para confirmar a grafia exata (`Accession Number`, não `Acession Number`).
+* **Comparação de IDs entre arquivos:** Verificado que `metadata.csv` contém todas as sequências baixadas originalmente (5301), enquanto a árvore filogenética (na versão inicial focada no genoma completo) continha apenas as sequências aprovadas pelo filtro de qualidade (257), causando incompatibilidade de IDs.
+
+**Solução Automática:**
+* `pd.read_csv(csv_input, sep=";", on_bad_lines="skip")`: define o separador correto e ignora linhas malformadas remanescentes.
+* `SeqIO.parse(fasta_aprovado, "fasta")`: extrai os IDs das sequências aprovadas diretamente do FASTA já filtrado, usados como referência.
+* `df[df[col_id].isin(ids_aprovados)]`: filtra o metadata, mantendo apenas as linhas correspondentes às sequências presentes na árvore.
+
+5. Análise de Mutações e Frequência Alélica
+
+Antes de comparar as sequências posição por posição, o script valida se o alinhamento gerado pelo MAFFT está correto: confirma se todas as sequências têm exatamente o mesmo tamanho (incluindo os gaps) e se nenhuma sequência bruta ficou fora do filtro de tamanho (600-1500 pb) definido na etapa de pré-processamento.
+
+Com o alinhamento validado, o script percorre cada posição (coluna) do alinhamento e verifica se há mais de uma base entre as sequências naquele ponto. Posições onde a única diferença é um gap (`-`) são descartadas, já que representam sequências mais curtas ou parciais, não uma variação biológica real.
+
+Para separar variações genuínas de possível ruído (erro de sequenciamento ou amostras isoladas), aplica-se um filtro de **MAF (Minor Allele Frequency)**: uma posição só é considerada mutação se o alelo menos frequente aparecer em pelo menos 1% das sequências analisadas. As posições aprovadas são exportadas para `results/tables/htlv_seq_mutations.csv`, com a posição, as bases encontradas e o valor de MAF calculado.
+
+Por fim, o script gera um gráfico de dispersão (Manhattan plot) das posições mutadas, salvo em `results/figures/`, permitindo visualizar regiões do gene `env` com maior concentração de variabilidade genética.
+
+**Execução:**
+`python scripts/06_analyze_mutations.py`
+
+**Principais Aprendizados de Código nesta Etapa:**
+* **Padronização de bases:** Uso de `.upper()` para uniformizar maiúsculas/minúsculas nas sequências antes da contagem — sem essa correção, bases idênticas (ex: `C` e `c`) eram contabilizadas como alelos diferentes, inflando artificialmente a taxa de mutação detectada (de 62,97% para 8,57% após a correção).
+* **Filtro de gap na comparação:** Uso de `set.discard("-")` para excluir gaps da contagem de variantes, evitando que sequências parciais (mais curtas que o alinhamento) fossem interpretadas como mutação.
+* **Cálculo de MAF:** Contagem de ocorrência de cada base por posição (dicionário de frequências) para calcular a proporção do alelo minoritário, filtrando variações estatisticamente pouco relevantes (ex: 1-2 sequências divergentes em meio a milhares).
+* **Manhattan plot:** Visualização de dispersão (posição x MAF) via Matplotlib para identificar visualmente regiões do gene com maior concentração de variabilidade.
 
 6. Agrupamento por Região Geográfica e Subtipo
-Gere tabelas agregadas e gráficos de calor (heatmaps) que correlacionam o percetual de similaridade genética com o subtipo viral e o continente/pais de isolamento.
