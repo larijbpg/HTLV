@@ -6,6 +6,8 @@
 from pathlib import Path
 from Bio import SeqIO
 import pandas as pd
+import seaborn as sns
+import matplotlib.pyplot as plt 
 
 # caminhos dos arquivos 
 arq_mutacoes = Path("results/tables/htlv_seq_mutations.csv")
@@ -71,7 +73,7 @@ tabela_ids = pd.DataFrame(lista_id, columns=["id_curto"]) # columns=["id_curto"]
 
 # agora vou juntar elas com o .merge()
 df_id_regiao = pd.merge(tabela_ids, df_metadata, left_on="id_curto", right_on="Accession Number")
-print(df_id_regiao.head())
+# print(df_id_regiao.head())
 
 # Agora vou percorrer cada linha de df_mutacoes(403 posições)
 resultados_todas_posicoes = []  # vou guardar aqui o resultado do groupby de cada posição
@@ -108,3 +110,86 @@ for indice, linha in df_mutacoes.iterrows():
     })
 
 print(f"Total de posições processadas: {len(resultados_todas_posicoes)}")
+
+# CRIAÇÃO DO HEATMAP
+    # vou criar o heatmap com o Seaborn (sns.heatmap() portanto vou precisar fazer uma tabela dinâmica (pivot) que prepara os dados em uma matriz)
+
+# POSIÇÕES QUE VOU MOSTRAR: apenas as 20 posições com maiores MAF: ordenar e filtrar
+df_ordenado = df_mutacoes.sort_values("maf", ascending=False) 
+# pego o df_mutacoes e vou pegar a coluna maf 
+# e o .sort_value vai ordenar e o ascending=False do maior para o menor (se fosse True, seria do menor para o maior )
+
+top_posicoes = df_ordenado.head(20) # primeiras 20 posições com o maior MAF
+posicoes_top = top_posicoes["posicao"].tolist() # .tolist(): transforma a coluna do DataFrame numa lista simples de números (pra facilitar o in depois)
+
+# pega so a lista de posicoes que estao  no top 20 (para facilitar a comparação)
+# filtra resultado_todas_posicoes, mantendo so os que estao no top 20
+
+resultado_top = []
+for resultado in resultados_todas_posicoes:
+    if resultado["posicao"] in posicoes_top:
+        resultado_top.append(resultado)
+print(f"Total de posições filtradas: {len(resultado_top)}")
+
+# DESMONTAR OS DADOS PARA UMA TABELA SIMPLES (COMPRIDA)
+# Preciso transformar resultado_top (lista com 20) numa unica tabela "longa"
+# continente + posição + contagem => formato que o pivot_table precisa para montar a matriz
+
+linhas_heatmap = [] # vou guardar aqui cada combinação de posição + continente + contagem
+
+for resultado in resultado_top:
+    posicao = resultado["posicao"]
+    contagem_regiao = resultado["contagem_por_regiao"] # essa é a serie (Continente, letra) => contagem
+
+
+    # .items() percorre a serie, devolvendo o indice (dupla: continente e letra) e o valor contagem
+    for (continente, letra), contagem in contagem_regiao.items():
+        linhas_heatmap.append({
+            "posicao": posicao,
+            "continente": continente,
+            "letra": letra,
+            "contagem": contagem
+        })
+
+# transforma essa lista de linhas numa tabela "longa"
+df_heatmap_longo = pd.DataFrame(linhas_heatmap)
+print(df_heatmap_longo.head())
+
+# TRANSFORMAR A TABELA COMPRIDA EM UMA MATRIZ (PIVOT_TABLE)
+
+#  Manter só a letra minoritária de cada posição
+
+# tira o gap "-" da tabela comprida, ele nunca representa mutação
+df_sem_gap = df_heatmap_longo[df_heatmap_longo["letra"] != "-"]
+
+# soma a contagem de cada letra por posição (juntando todos os continentes), pra descobrir
+# qual letra é a mais rara em cada posição
+soma_por_letra = df_sem_gap.groupby(["posicao", "letra"])["contagem"].sum().reset_index()
+
+# .idxmin(): pega o índice da linha com o MENOR valor de contagem, dentro de cada grupo de posição
+indices_minoritarios = soma_por_letra.groupby("posicao")["contagem"].idxmin()
+letra_minoritaria_por_posicao = soma_por_letra.loc[indices_minoritarios]
+
+# filtro df_sem_gap, mantendo só as linhas onde a letra bate com a minoritária daquela posição
+df_so_minoritaria = df_sem_gap.merge(
+    letra_minoritaria_por_posicao[["posicao", "letra"]],
+    on=["posicao", "letra"]
+)
+
+# transforma em matriz: continente nas linhas, posição nas colunas, contagem da letra minoritária como valor
+matriz_heatmap = df_so_minoritaria.pivot_table(index="continente", columns="posicao", values="contagem", fill_value=0)
+# fill_value=0: se um continente não tiver nenhuma sequência com a letra minoritária numa posição, mostra 0 (em vez de vazio)
+
+print(matriz_heatmap)
+
+
+# DESENHAR O HEATMAP COM O SEABORN
+plt.figure(figsize=(14, 6))  # define o tamanho da imagem (largura, altura), já que tem várias colunas
+sns.heatmap(matriz_heatmap, cmap="viridis", annot=False)  # cmap: paleta de cores; annot=False: não escreve o número dentro de cada célula (ficaria poluído com 20 colunas)
+
+plt.title("Distribuição Geográfica das Top 20 Mutações (por Continente)")
+plt.xlabel("Posição no alinhamento")
+plt.ylabel("Continente")
+
+caminho_heatmap = Path("results/figures/heatmap_geo_mutacoes.png")
+plt.savefig(caminho_heatmap, bbox_inches="tight")  # bbox_inches="tight": evita cortar os nomes dos continentes/posições na borda da imagem
