@@ -175,6 +175,8 @@ df_so_minoritaria = df_sem_gap.merge(
     letra_minoritaria_por_posicao[["posicao", "letra"]],
     on=["posicao", "letra"]
 )
+# remove as sequências sem continente definido, focando só nas regiões conhecidas
+df_so_minoritaria = df_so_minoritaria[df_so_minoritaria["continente"] != "-"]
 
 # transforma em matriz: continente nas linhas, posição nas colunas, contagem da letra minoritária como valor
 matriz_heatmap = df_so_minoritaria.pivot_table(index="continente", columns="posicao", values="contagem", fill_value=0)
