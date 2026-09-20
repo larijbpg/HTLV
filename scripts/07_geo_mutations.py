@@ -199,3 +199,32 @@ plt.savefig(caminho_heatmap, bbox_inches="tight")  # bbox_inches="tight": evita 
 # Para ver se os dados estão subestimando a variabilidade de acordo com a regiao geográfica, vou ver quantas sequencias possuo de cada continente
 qtd_seq_geo = df_metadata["Continent"].value_counts()
 print(qtd_seq_geo)
+
+# Análise de subgrupos para CADA REGIÃO: vou filtrar do metadata.csv só o continente
+# Primeiro vou analisar quais subtipos e subgrupos tem no metadata completo
+print("-"*20,"Subtipos","-"*20)
+print(df_metadata["Subtype"].unique()) # .unique(): 
+print("-"*20,"Subgrupo","-"*20)
+print(df_metadata["Subgroup"].unique())
+
+# ÁSIA
+print("-"*20,"ÁSIA","-"*20)
+df_asia = df_metadata[df_metadata["Continent"] == "Asia"]
+# df_metadata["Continent"]] == "Asia"  => sim ou não para continente igual a ásia
+# df[...] => pega a lista sim ou nao e só pega as linhas que forem sim
+
+print(df_asia["Subtype"].value_counts())
+print(df_asia["Subgroup"].value_counts())
+
+# AMÉRICA DO SUL
+print("-"*20,"AMERICA DO SUL","-"*20)
+df_america_sul = df_metadata[df_metadata["Continent"] == "South America"]
+print(df_america_sul["Subtype"].value_counts())
+print(df_america_sul["Subgroup"].value_counts())
+
+
+# ÁFRICA
+print("-"*20,"AFRICA","-"*20)
+df_africa = df_metadata[df_metadata["Continent"] == "Africa"]
+print(df_africa["Subtype"].value_counts())
+print(df_africa["Subgroup"].value_counts())

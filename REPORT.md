@@ -51,14 +51,23 @@ As posições aprovadas são exportadas para `results/tables/htlv_seq_mutations.
 
 
 **Análise de Mutações e Variabilidade**
-    Das 4.704 posições do alinhamento, 2.962 (62,97%) apresentaram alguma variação entre as sequências antes da aplicação do filtro. Após a padronização de maiúsculas e plicação de filtro do MAF (>=1%), esse numero foi reduzido para 403 posições (8,57%), consideradas mutações relevantes (uma faixa condizente com a diversidade genética esperada para uma amostra global do vírus).
+Das 4.704 posições do alinhamento, 2.962 (62,97%) apresentaram alguma variação entre as sequências antes da aplicação do filtro. Após a padronização de maiúsculas e plicação de filtro do MAF (>=1%), esse numero foi reduzido para 403 posições (8,57%), consideradas mutações relevantes (uma faixa condizente com a diversidade genética esperada para uma amostra global do vírus).
     O Manhattan plot evidencia concentração de picos de MAF em determinada faixa de posições, ou regiões mais conservadas.
 
 ![Manhattan plot de MAF por posição no gene env](results/figures/dispersao_env.png)
 
-    Outro observação feita, foi através do heatmap. É possíel observar que a Ásia é a região que tem uma maior quantidade de letra minoritária, ou seja, é a região que apresenta maior variabilidade em posições específicas 1622, 1324, 1430, 1431, 1464, 1766 e etc. Além disso, é possível observar que a África, Europa, Oceania e America do Norte são regiões que menos apresentam variações. Em contrapartida, a America do Sul é a região que possui variabilidade alelica em várias posiões. 
-    Após analisar a contagem de sequências por região, foi possível eliminar a suspeita de que os resultados da Ásia estavam sendo superestimados por uma maior quantidade de amostras, o que na realidade, não é o caso. A região com maior quantidade de amostras foi a América do Sul (1.008 sequências), que ficou como a segunda região de maior variabilidade no heatmap, atrás da Ásia (733 sequências).
+Outro observação feita, foi através do heatmap. É possíel observar que a Ásia é a região que tem uma maior quantidade de letra minoritária, ou seja, é a região que apresenta maior variabilidade em posições específicas 1622, 1324, 1430, 1431, 1464, 1766 e etc. Além disso, é possível observar que a África, Europa, Oceania e America do Norte são regiões que menos apresentam variações. Em contrapartida, a America do Sul é a região que possui variabilidade alelica em várias posiões. 
+Após analisar a contagem de sequências por região, foi possível eliminar a suspeita de que os resultados da Ásia estavam sendo superestimados por uma maior quantidade de amostras, o que na realidade, não é o caso. A região com maior quantidade de amostras foi a América do Sul (1.008 sequências), que ficou como a segunda região de maior variabilidade no heatmap, atrás da Ásia (733 sequências).
     
 ![Heatmap de distribuição geográfica das mutações por continente](results/figures/heatmap_geo_mutacoes.png)
 
+Após encontrar artigos relevantes via NCBI/PubMed, foi realizada uma investigação sobre uma discrepância entre o heatmap gerado e a literatura científica: o heatmap mostrava a África com baixa variabilidade genética, enquanto os artigos descrevem justamente o oposto: a África é apontada como a região de maior diversidade genética do HTLV-1, com seis genótipos distintos já identificados (a, b, d, e, f, g).
+
+Para investigar essa discrepância, foram analisadas as colunas Subtype e Subgroup do metadata, separadamente por continente:
+
+- **Ásia:** predominância do subtipo "a" (211 sequências), dividido em dois subgrupos, A (100) e B (65) — uma proporção (~60%/40%) semelhante à relatada entre os subgrupos Transcontinental e Japonês em estudo com amostras de Taiwan (58%/42%).
+- **América do Sul:** forte predominância do subtipo "a" (834 sequências) e do subgrupo A (716) — baixa diversidade de subtipos, condizente com o esperado para o genótipo Cosmopolita, amplamente disseminado nessa região.
+- **África:** ao contrário dos outros dois continentes, apareceram 5 subtipos diferentes na mesma amostra — b (149), a (74), d (18), g (4) e f (2) — a maior diversidade de subtipos entre os três continentes analisados.
+
+Esse resultado confirma que os dados da África **de fato** apresentam maior diversidade de subtipos, como descrito na literatura, o que parecia, à primeira vista, contradizer o heatmap. A explicação está em que as duas análises medem coisas diferentes: o heatmap mostra a variação nucleotídica **posição a posição, dentro do gene `env`**, enquanto a contagem de subtipos mede quantos **genótipos distintos** existem na amostra. Ou seja, a África pode abrigar mais genótipos diferentes do vírus (maior diversidade populacional), sem que isso implique, necessariamente, em maior variação interna nas posições específicas do gene `env` analisadas neste estudo.
 
