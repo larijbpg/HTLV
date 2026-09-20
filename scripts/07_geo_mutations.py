@@ -195,3 +195,7 @@ plt.ylabel("Continente")
 
 caminho_heatmap = Path("results/figures/heatmap_geo_mutacoes.png")
 plt.savefig(caminho_heatmap, bbox_inches="tight")  # bbox_inches="tight": evita cortar os nomes dos continentes/posições na borda da imagem
+
+# Para ver se os dados estão subestimando a variabilidade de acordo com a regiao geográfica, vou ver quantas sequencias possuo de cada continente
+qtd_seq_geo = df_metadata["Continent"].value_counts()
+print(qtd_seq_geo)

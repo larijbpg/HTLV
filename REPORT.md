@@ -46,12 +46,19 @@ As posições aprovadas são exportadas para `results/tables/htlv_seq_mutations.
 
 **Reconstrução Filogenética**
     É possivel observar que a maioria das amostras tem origem geográfica não definida (cor roxo escuro).
+
 ![Árvore filogenética do gene env colorida por região geográfica](results/figures/htlv_tree_env.png)
 
 
 **Análise de Mutações e Variabilidade**
-    Das 4.704 posições do alinhamento, 2.962 (62,97%) apresentaram alguma variação entre as sequências antes da aplicação do filtro. Após a pad5ronização de maiúsculas e plicação de filtro do MAF (>=1%), esse numero foi reduzido para 403 posições (8,57%), consideradas mutações relevantes (uma faixa condizente com a diversidade genética esperada para uma amostra global do vírus).
+    Das 4.704 posições do alinhamento, 2.962 (62,97%) apresentaram alguma variação entre as sequências antes da aplicação do filtro. Após a padronização de maiúsculas e plicação de filtro do MAF (>=1%), esse numero foi reduzido para 403 posições (8,57%), consideradas mutações relevantes (uma faixa condizente com a diversidade genética esperada para uma amostra global do vírus).
     O Manhattan plot evidencia concentração de picos de MAF em determinada faixa de posições, ou regiões mais conservadas.
+
 ![Manhattan plot de MAF por posição no gene env](results/figures/dispersao_env.png)
+
+    Outro observação feita, foi através do heatmap. É possíel observar que a Ásia é a região que tem uma maior quantidade de letra minoritária, ou seja, é a região que apresenta maior variabilidade em posições específicas 1622, 1324, 1430, 1431, 1464, 1766 e etc. Além disso, é possível observar que a África, Europa, Oceania e America do Norte são regiões que menos apresentam variações. Em contrapartida, a America do Sul é a região que possui variabilidade alelica em várias posiões. 
+    Após analisar a contagem de sequências por região, foi possível eliminar a suspeita de que os resultados da Ásia estavam sendo superestimados por uma maior quantidade de amostras, o que na realidade, não é o caso. A região com maior quantidade de amostras foi a América do Sul (1.008 sequências), que ficou como a segunda região de maior variabilidade no heatmap, atrás da Ásia (733 sequências).
+    
+![Heatmap de distribuição geográfica das mutações por continente](results/figures/heatmap_geo_mutacoes.png)
 
 
