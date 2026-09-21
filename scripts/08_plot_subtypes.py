@@ -13,7 +13,9 @@ output_plot = Path("results/figures/subtypes_by_continent.png")
 df = pd.read_csv(metadata_file, sep=";", on_bad_lines="skip")
 
 # limpeza dos dados => remove linhas onde Continent ou Subtype estejam ausentes ou com o "-"
-df_clean = df[(df["Continent"] != "-") & (df["Subtype"].notna())] 
+df_clean = df[(df["Continent"] != "-") & 
+              (df["Subtype"] != "-") &
+              (df["Subtype"].notna())] 
 
 # tabela cruzada (subtipos por continente)
 contagem = df_clean.groupby(["Continent","Subtype"]).size().unstack(fill_value=0)
