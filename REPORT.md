@@ -61,13 +61,16 @@ Após analisar a contagem de sequências por região, foi possível eliminar a s
     
 ![Heatmap de distribuição geográfica das mutações por continente](results/figures/heatmap_geo_mutacoes.png)
 
-Após encontrar artigos relevantes via NCBI/PubMed, foi realizada uma investigação sobre uma discrepância entre o heatmap gerado e a literatura científica: o heatmap mostrava a África com baixa variabilidade genética, enquanto os artigos descrevem justamente o oposto: a África é apontada como a região de maior diversidade genética do HTLV-1, com seis genótipos distintos já identificados (a, b, d, e, f, g).
-
+Após encontrar artigos relevantes via NCBI/PubMed, foi realizada uma investigação sobre uma discrepância entre o heatmap gerado e a literatura científica: o heatmap mostrava a África com baixa variabilidade genética, enquanto os artigos descrevem justamente o oposto: a África é apontada como a região de maior diversidade genética do HTLV-1, com seis genótipos distintos já identificados (a, b, d, e, f, g).   
 Para investigar essa discrepância, foram analisadas as colunas Subtype e Subgroup do metadata, separadamente por continente:
-
-- **Ásia:** predominância do subtipo "a" (211 sequências), dividido em dois subgrupos, A (100) e B (65) — uma proporção (~60%/40%) semelhante à relatada entre os subgrupos Transcontinental e Japonês em estudo com amostras de Taiwan (58%/42%).
-- **América do Sul:** forte predominância do subtipo "a" (834 sequências) e do subgrupo A (716) — baixa diversidade de subtipos, condizente com o esperado para o genótipo Cosmopolita, amplamente disseminado nessa região.
-- **África:** ao contrário dos outros dois continentes, apareceram 5 subtipos diferentes na mesma amostra — b (149), a (74), d (18), g (4) e f (2) — a maior diversidade de subtipos entre os três continentes analisados.
-
-Esse resultado confirma que os dados da África **de fato** apresentam maior diversidade de subtipos, como descrito na literatura, o que parecia, à primeira vista, contradizer o heatmap. A explicação está em que as duas análises medem coisas diferentes: o heatmap mostra a variação nucleotídica **posição a posição, dentro do gene `env`**, enquanto a contagem de subtipos mede quantos **genótipos distintos** existem na amostra. Ou seja, a África pode abrigar mais genótipos diferentes do vírus (maior diversidade populacional), sem que isso implique, necessariamente, em maior variação interna nas posições específicas do gene `env` analisadas neste estudo.
-
+    - Ásia: predominância do subtipo "a" (211 sequências), dividido em dois subgrupos, A (100) e B (65) — uma proporção (~60%/40%) semelhante à relatada entre os subgrupos Transcontinental e Japonês em estudo com amostras de Taiwan (58%/42%).   
+    
+    - América do Sul: forte predominância do subtipo "a" (834 sequências) e do subgrupo A (716) — baixa diversidade de subtipos, condizente com o esperado para o genótipo Cosmopolita, amplamente disseminado nessa região.   
+    
+    - África: ao contrário dos outros dois continentes, apareceram 5 subtipos diferentes na mesma amostra — b (149), a (74), d (18), g (4) e f (2) — a maior diversidade de subtipos entre os três continentes analisados.   
+    Esse resultado confirma que os dados da África de fato apresentam maior diversidade de subtipos, como descrito na literatura, o que parecia, à primeira vista, contradizer o heatmap. 
+    A explicação está em que as duas análises medem coisas diferentes: o heatmap mostra a variação nucleotídica posição a posição, dentro do gene env, enquanto a contagem de subtipos mede quantos genótipos distintos existem na amostra. Ou seja, a África pode abrigar mais genótipos diferentes do vírus (maior diversidade populacional), sem que isso implique, necessariamente, em maior variação interna nas posições específicas do gene env analisadas neste estudo.   Além disso, ao analisar o gráfico de barras empilhadas e cruzar com o heatmap, foi possível observar que:
+        Ásia e América do Sul: Apesar de apresentarem maior variabilidade em posições específicas do heatmap, apresentam quase exclusivamente o subtipo "a" nas amostras analisadas. Foi possível observar que esse subtipo "a" apresenta posições adjacentes (1766 a 1888) com grande variabilidade alélica, dando a entender que essa região é uma área de alta plasticidade. 
+        Em suma, isso mostra uma dinâmica evolutiva própria do gene env, indiciando uma região sob pressão seletiva ou alta taxa de mutação dentro de uma mesma linhagem.   
+        
+        África: Apresenta o padrão oposto, exibindo pouca variabilidade nucleotídica nas posições analisadas no heatmap, mas uma grande variabilidade de subtipos entre as amostras da região.
