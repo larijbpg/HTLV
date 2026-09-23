@@ -15,7 +15,8 @@ O objetivo é automatizar o download, pré-processamento, alinhamento e análise
     3. Alinhamento de Sequências
     4. Filogenética 
     5. Análise de Substituições e Variabilidade
-    6. Agrupamento por Região Geográfica e Subtipo
+    6. Agrupamento por Região Geográfica
+    7. Agrupamento por Subtipo
 * Estrutura dos Dados de Entrada
 * Resultados 
 
@@ -26,8 +27,9 @@ O pipeline processa arquivos genômicos no formato FASTA acompanhados de metadad
 1. Calcular as estatísticas descritivas das sequencias (tamanho, conteúdo GC)
 2. Realizar alinhamento múltiplo de sequências (MSA)
 3. Filogenética (IQ-TREE, iTOL)
-4. Identificar posições polimórficas (mutações/SNPs) e calcular matrizes de identidade percentual.
-5. Cruzar variações genéticas com a distribuição geográfica e subtipos de HTLV (HTLV-1, HTLV-2, etc.)
+4. Identificar posições polimórficas (mutações/SNPs) 
+5. Cruzar mutações genéticas identificadas com a distribuição geográfica das sequências 
+6. Analisar a distribuição de subtipos de HTLV-1 por continente
 
 > **Nota sobre o escopo do projeto:** O pipeline foi inicialmente desenvolvido e executado utilizando o **genoma completo** do HTLV. Em uma fase posterior, o escopo foi refinado para focar exclusivamente no **gene env**, com um filtro de tamanho específico (600-1500 pb) aplicado desde a etapa de obtenção de dados. Por esse motivo, algumas seções deste documento (referentes a etapas executadas antes da mudança) mencionam números de sequências aprovadas da versão com genoma completo (ex: 257), enquanto os resultados mais recentes refletem a versão com o gene `env` (ex: 2341 sequências aprovadas de 5301).
 Portanto: 
@@ -56,6 +58,8 @@ htlv-genomics-pipeline/
     - 04_plot_tree.py
     - 05_make_itol_metadata.py
     - 06_analyze_mutations.py
+    - 07_geo_mutations.py
+    - 08_plot_subtypes.py
 - README.md
 - REPORT.md
 - .gitignore
@@ -136,7 +140,7 @@ Existem 3 métodos avaliados no pipeline:
 Para colorir a árvore no iTOL por região geográfica, o script faz a busca cruzada mantendo a equivalência de IDs do FASTA com os metadados do CSV.
 
 **Execução:**
-python scripts/05_make_itol_metadata.py
+`python scripts/05_make_itol_metadata.py`
 
 **Principais Aprendizados de Código nesta Etapa:**
 * **Mapeamento de IDs (De-para):** Uso de dicionário (mapa_ids = dict(zip(ids_curtos, ids_longos))) para relacionar o ID limpo do CSV (ex: AB273635.1) ao ID longo mantido pelo IQ-TREE na árvore (ex: AB273635.1.522.undefined.-.9033).
@@ -177,4 +181,33 @@ Por fim, o script gera um gráfico de dispersão (Manhattan plot) das posições
 * **Cálculo de MAF:** Contagem de ocorrência de cada base por posição (dicionário de frequências) para calcular a proporção do alelo minoritário, filtrando variações estatisticamente pouco relevantes (ex: 1-2 sequências divergentes em meio a milhares).
 * **Manhattan plot:** Visualização de dispersão (posição x MAF) via Matplotlib para identificar visualmente regiões do gene com maior concentração de variabilidade.
 
-6. Agrupamento por Região Geográfica e Subtipo
+6. Agrupamento por Região Geográfica
+
+Para investigar se as mutações identificadas na etapa anterior estão associadas a alguma região geográfica específica, o script `07_geo_mutations.py` cruza as posições mutadas com os metadados de origem das sequências.
+
+Como o alinhamento usa o id longo mantido pelo IQ-TREE (ex: `AB036346.1.31.undefined.-.1080`) e o metadata usa o Accession Number no formato curto (ex: `AB036346.1`), o id longo é padronizado (cortado nos dois primeiros segmentos) antes do cruzamento, seguindo a mesma lógica já usada no `05_make_itol_metadata.py`.
+
+Para cada uma das posições mutadas, o script recupera a base de cada sequência naquela posição, junta com o continente de origem (via merge pelo id padronizado) e agrupa por Continent + base, contando quantas sequências de cada região apresentam cada variante. Esse processo é repetido para as 20 posições de maior MAF, e o resultado é visualizado como um heatmap (Continente x Posição), com a intensidade representando a contagem da base minoritária.
+
+**Execução:**
+`python scripts/07_geo_mutations.py`
+
+**Principais Aprendizados de Código nesta Etapa:**
+* **Reaproveitamento de cálculo fixo:** A relação id → região é calculada uma única vez (`df_id_regiao`), fora do loop das posições, evitando refazer o merge 403 vezes — já que essa relação não muda de posição para posição.
+* **`zip()` para combinar listas paralelas:** Uso de `zip(seq_lista, lista_id)` para percorrer sequência e id já calculado ao mesmo tempo, sem recalcular o id dentro do loop.
+* **`pivot_table` para montar a matriz do heatmap:** Transformação de uma tabela "longa" (posição, continente, base, contagem) em uma matriz (continente x posição) com `pivot_table(index=..., columns=..., values=..., fill_value=0)`.
+* **Filtro de base minoritária:** Uso de `.idxmin()` por grupo de posição para isolar, em cada posição, apenas a contagem da base menos frequente — evitando que a base majoritária (presente na maioria das sequências, em todas as posições) mascarasse a variação real entre regiões.
+
+7. Análise de Subtipos e Subgrupos por Continente
+
+Complementando a análise geográfica, o script `08_plot_subtypes.py` investiga a distribuição dos subtipos (`Subtype`) de HTLV-1 entre os continentes, permitindo comparar os achados do pipeline com a literatura científica sobre a diversidade genética do vírus.
+
+O script calcula a proporção de cada subtipo por continente (normalizando pelo total de sequências de cada região, para não enviesar o resultado pela quantidade de amostras) e gera um gráfico de barras empilhadas mostrando essa distribuição.
+
+**Execução:**
+`python scripts/08_plot_subtypes.py`
+
+**Principais Aprendizados de Código nesta Etapa:**
+* **Tabela cruzada com `groupby` + `unstack`:** Uso de `df.groupby(["Continent", "Subtype"]).size().unstack(fill_value=0)` para transformar contagens agrupadas em uma tabela no formato continente x subtipo, pronta para plotagem.
+* **Normalização por linha:** Uso de `contagem.div(contagem.sum(axis=1), axis=0) * 100` para calcular a proporção percentual de cada subtipo dentro do total de cada continente, evitando que regiões com mais amostras (ex: América do Sul) dominassem visualmente o gráfico.
+* **Gráfico de barras empilhadas com Seaborn/Matplotlib:** Uso de `plot(kind="bar", stacked=True)` com legenda posicionada fora da área de plotagem (`bbox_to_anchor`), evitando sobreposição com as barras.
