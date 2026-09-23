@@ -45,9 +45,12 @@ As posições aprovadas são exportadas para `results/tables/htlv_seq_mutations.
 
 
 **Reconstrução Filogenética**
-    É possivel observar que a maioria das amostras tem origem geográfica não definida (cor roxo escuro).
 
 ![Árvore filogenética do gene env colorida por região geográfica](results/figures/htlv_tree_env.png)
+
+É possível observar que a maioria das amostras tem origem geográfica não definida (cor roxo escuro na legenda). Notavelmente, essas sequências sem metadado geográfico tendem a se agrupar num clado isolado do restante da árvore (visível como um conjunto de ramos sem cor atribuída, já que não constam no arquivo de anotação do iTOL), sugerindo uma origem comum entre elas — possivelmente provenientes de um mesmo lote ou estudo de depósito no GenBank que não preencheu esse campo. Esse padrão de ausência de metadado concentrada num subconjunto específico do dataset também se repete nas demais análises deste relatório (geográfica e de subtipos), reforçando que a falta de dado não é aleatória, mas sistemática em parte da amostra.
+
+Além disso, os ramos coloridos formam blocos relativamente coesos ao longo da árvore, com pouca dispersão de cores dentro de um mesmo clado — indicando que sequências geograficamente próximas tendem também a ser filogeneticamente próximas, consistente com o padrão esperado de dispersão geográfica do vírus.
 
 
 **Análise de Mutações e Variabilidade**
@@ -69,8 +72,10 @@ Para investigar essa discrepância, foram analisadas as colunas Subtype e Subgro
     
     - África: ao contrário dos outros dois continentes, apareceram 5 subtipos diferentes na mesma amostra — b (149), a (74), d (18), g (4) e f (2) — a maior diversidade de subtipos entre os três continentes analisados.   
     Esse resultado confirma que os dados da África de fato apresentam maior diversidade de subtipos, como descrito na literatura, o que parecia, à primeira vista, contradizer o heatmap. 
-    A explicação está em que as duas análises medem coisas diferentes: o heatmap mostra a variação nucleotídica posição a posição, dentro do gene env, enquanto a contagem de subtipos mede quantos genótipos distintos existem na amostra. Ou seja, a África pode abrigar mais genótipos diferentes do vírus (maior diversidade populacional), sem que isso implique, necessariamente, em maior variação interna nas posições específicas do gene env analisadas neste estudo.   Além disso, ao analisar o gráfico de barras empilhadas e cruzar com o heatmap, foi possível observar que:
-        Ásia e América do Sul: Apesar de apresentarem maior variabilidade em posições específicas do heatmap, apresentam quase exclusivamente o subtipo "a" nas amostras analisadas. Foi possível observar que esse subtipo "a" apresenta posições adjacentes (1766 a 1888) com grande variabilidade alélica, dando a entender que essa região é uma área de alta plasticidade. 
-        Em suma, isso mostra uma dinâmica evolutiva própria do gene env, indiciando uma região sob pressão seletiva ou alta taxa de mutação dentro de uma mesma linhagem.   
-        
-        África: Apresenta o padrão oposto, exibindo pouca variabilidade nucleotídica nas posições analisadas no heatmap, mas uma grande variabilidade de subtipos entre as amostras da região.
+    A explicação está em que as duas análises medem coisas diferentes: o heatmap mostra a variação nucleotídica posição a posição, dentro do gene env, enquanto a contagem de subtipos mede quantos genótipos distintos existem na amostra. Ou seja, a África pode abrigar mais genótipos diferentes do vírus (maior diversidade populacional), sem que isso implique, necessariamente, em maior variação interna nas posições específicas do gene env analisadas neste estudo. Além disso, ao analisar o gráfico de barras empilhadas (proporção de subtipos por continente) e cruzar com o heatmap, foi possível observar que:
+
+![Proporção de subtipos de HTLV-1 por continente](results/figures/subtypes_by_continent.png)
+
+    - **Ásia e América do Sul:** apesar de apresentarem maior variabilidade em posições específicas do heatmap, apresentam quase exclusivamente o subtipo "a" nas amostras analisadas. Foi possível observar que esse subtipo "a" apresenta posições adjacentes (1766 a 1888) com grande variabilidade alélica, dando a entender que essa região é uma área de alta plasticidade. Em suma, isso mostra uma dinâmica evolutiva própria do gene *env*, indicando uma região sob pressão seletiva ou alta taxa de mutação dentro de uma mesma linhagem.
+
+    - **África:** apresenta o padrão oposto, exibindo pouca variabilidade nucleotídica nas posições analisadas no heatmap, mas uma grande variabilidade de subtipos entre as amostras da região.
